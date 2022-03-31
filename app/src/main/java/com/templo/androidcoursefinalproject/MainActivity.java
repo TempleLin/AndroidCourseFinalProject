@@ -57,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
 //                    .add(R.id.frame_for_items_web, fragment)
 //                    .commit();
 //        }
-        ImageButton cartBtn = findViewById(R.id.shopping_cart_btn);
-        cartBtn.setOnClickListener(v -> {
-            Log.d("TAG", "Click cart button!");
-        });
+
     }
 }

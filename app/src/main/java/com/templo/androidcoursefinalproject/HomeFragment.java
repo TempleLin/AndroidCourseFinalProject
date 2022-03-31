@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,6 +84,11 @@ public class HomeFragment extends Fragment {
 
         homeFragWV.loadUrl("file:///android_asset/ItemsListsWeb/index.html");
 //        homeFragWV.loadUrl("javascript:(function(){alert('Hello world!');})()");
+
+        ImageButton cartBtn = requireView().findViewById(R.id.shopping_cart_btn);
+        cartBtn.setOnClickListener(v -> {
+            Log.d("TAG", "Click cart button!");
+        });
     }
 
     private static class Callback extends WebViewClient {
