@@ -56,11 +56,11 @@ public abstract class UserRoomDatabase extends RoomDatabase {
                     //ROOM communication with database must be used in the background thread,
                     //  that's why it's in .execute callback.
 
-                    UserDao userDao = INSTANCE.contactDao();
-                    userDao.deleteAll();
-
-                    userDao.insert(new User("John", "Teacher@testmail.com", "5678"));
-                    userDao.insert(new User("Rock", "Actor@testmail.com", "1234"));
+//                    UserDao userDao = INSTANCE.contactDao();
+//                    userDao.deleteAll();
+//
+//                    userDao.insert(new User("John", "Teacher@testmail.com", "5678"));
+//                    userDao.insert(new User("Rock", "Actor@testmail.com", "1234"));
                 });
             }
         };

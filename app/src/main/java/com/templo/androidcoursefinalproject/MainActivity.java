@@ -47,7 +47,30 @@ public class MainActivity extends AppCompatActivity {
         assert navHostFragment != null;
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
 
-        //Test ROOM database.
-//        PureExperiments.testROOMDatabase(this);
+        startupROOMDatabase();
+    }
+
+    private void startupROOMDatabase() {
+        //Remember to instantiate this ViewModel object like this before calling its class's static methods.
+        //  (ex. .insert())
+        UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this.getApplication())
+                .create(UserViewModel.class);
+
+        //This callback passed to .observe() gets called when the LiveData gets edited in real time.
+        //  Therefore, the textview updates its text values whenever .insert() adds values to the LiveData.
+        userViewModel.getAllUsers().observe(this, users -> {
+            Log.d("TAG", "Observer called!");
+            StringBuilder toShow = new StringBuilder();
+            for(User user : users) {
+                toShow.append(user.getName())
+                        .append('-')
+                        .append(user.getEmail())
+                        .append('-')
+                        .append(user.getPassword())
+                        .append('\n');
+            }
+            //This debug.log might not work, but the value is correct.
+            Log.d("ROOM_DATABASE", toShow.toString());
+        });
     }
 }
