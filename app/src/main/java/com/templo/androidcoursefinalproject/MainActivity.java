@@ -13,7 +13,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.templo.androidcoursefinalproject.pure_experiments.PureExperiments;
 import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
