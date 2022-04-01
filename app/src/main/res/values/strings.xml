@@ -5,4 +5,8 @@
     <string name="home">Home</string>
     <string name="notice">Notice</string>
     <string name="profile">Profile</string>
+    <string name="login">Login</string>
+    <string name="username">UserName</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 </resources>

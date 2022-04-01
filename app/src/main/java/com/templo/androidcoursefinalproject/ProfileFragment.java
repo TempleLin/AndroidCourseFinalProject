@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -14,12 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -32,6 +31,7 @@ public class ProfileFragment extends Fragment {
     private Button loginBtn;
 
     private static boolean loggedIn = false;
+    private static Uri profilePicAfterLoggedIn;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -69,6 +69,7 @@ public class ProfileFragment extends Fragment {
     private void setLoginBtnLoginOnClick() {
         if (loggedIn) {
             deleteLoginBtn();
+            profilePicImgV.setImageURI(profilePicAfterLoggedIn);
             return;
         }
         loginBtn.setOnClickListener(v -> {
@@ -92,8 +93,8 @@ public class ProfileFragment extends Fragment {
                     Intent data = result.getData();
                     if (data != null) {
                         Uri selectedImg = data.getData();
-                        ImageView imageView = requireView().findViewById(R.id.profile_pic_imgv);
-                        imageView.setImageURI(selectedImg);
+                        profilePicImgV.setImageURI(selectedImg);
+                        profilePicAfterLoggedIn = selectedImg; //Save image to buffer.
                     }
                 }
             });
@@ -118,6 +119,20 @@ public class ProfileFragment extends Fragment {
         ViewGroup parent = (ViewGroup) loginBtn.getParent();
         if (parent != null) {
             parent.removeView(loginBtn);
+            showUserNameLoginBtnDelete(parent);
         }
+    }
+
+    private void showUserNameLoginBtnDelete(ViewGroup parent) {
+        TextView showUser = new TextView(getActivity());
+        showUser.setText("Test User");
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(64, 0, 0, 0);
+        showUser.setLayoutParams(params);
+        showUser.setTextSize(20);
+        parent.addView(showUser);
     }
 }
