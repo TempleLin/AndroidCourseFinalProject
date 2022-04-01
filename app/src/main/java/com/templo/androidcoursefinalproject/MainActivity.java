@@ -1,23 +1,21 @@
 package com.templo.androidcoursefinalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.templo.androidcoursefinalproject.pure_experiments.PureExperiments;
+import com.templo.androidcoursefinalproject.room_database.model.User;
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
 /**
  * Plans:
@@ -49,14 +47,7 @@ public class MainActivity extends AppCompatActivity {
         assert navHostFragment != null;
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_for_items_web);
-//        if (fragment == null) {
-//            fragment = SelectionItemFrag.newInstance();
-//            fragmentManager.beginTransaction()
-//                    .add(R.id.frame_for_items_web, fragment)
-//                    .commit();
-//        }
-
+        //Test ROOM database.
+//        PureExperiments.testROOMDatabase(this);
     }
 }
