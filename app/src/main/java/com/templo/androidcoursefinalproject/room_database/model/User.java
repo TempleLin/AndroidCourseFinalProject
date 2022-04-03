@@ -27,6 +27,17 @@ public class User {
         this.password = password;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
