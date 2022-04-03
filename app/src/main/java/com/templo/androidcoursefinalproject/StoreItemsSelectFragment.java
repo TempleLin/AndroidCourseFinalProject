@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +16,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.util.Objects;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SelectionItemFrag#newInstance} factory method to
+ * Use the {@link StoreItemsSelectFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SelectionItemFrag extends Fragment {
+public class StoreItemsSelectFragment extends Fragment {
     WebView itemsGalleryWV;
 
-    public SelectionItemFrag() {
+    public StoreItemsSelectFragment() {
         // Required empty public constructor
     }
 
@@ -38,8 +35,8 @@ public class SelectionItemFrag extends Fragment {
      * @return A new instance of fragment SelectionItemFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static SelectionItemFrag newInstance() {
-        SelectionItemFrag fragment = new SelectionItemFrag();
+    public static StoreItemsSelectFragment newInstance() {
+        StoreItemsSelectFragment fragment = new StoreItemsSelectFragment();
 //        Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);
@@ -60,7 +57,7 @@ public class SelectionItemFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_selection_item, container, false);
+        return inflater.inflate(R.layout.fragment_store_items_select, container, false);
     }
 
     //getView(), requireView(), findViewById() need to be called after view is created.
