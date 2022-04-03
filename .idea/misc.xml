@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/LearningFolder/AndroidCourseFinalProject/app/src/main/res/layout/activity_main.xml" value="0.19067028985507245" />
-        <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/layout/activity_login_register.xml" value="0.2" />
+        <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/layout/activity_login_register.xml" value="0.264" />
+        <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/layout/fragment_login.xml" value="0.20425724637681159" />
         <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
+        <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/layout/fragment_register.xml" value="0.20425724637681159" />
         <entry key="..\:/LearningProjects/YuanZhiSophomore2ndSemesterHWs/MobileProgramming/FinalProject/app/src/main/res/drawable/ic_home_background.xml" value="0.32" />
         <entry key="..\:/LearningProjects/YuanZhiSophomore2ndSemesterHWs/MobileProgramming/FinalProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
         <entry key="..\:/LearningProjects/YuanZhiSophomore2ndSemesterHWs/MobileProgramming/FinalProject/app/src/main/res/drawable/ic_notice_background.xml" value="0.32" />

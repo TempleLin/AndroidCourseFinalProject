@@ -1,40 +1,37 @@
 package com.templo.androidcoursefinalproject;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginRegisterActivity extends AppCompatActivity {
-
-    private Button loginBtn;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
-        loginBtn = findViewById(R.id.login_check_btn);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
 
-        loginBtn.setOnClickListener(v -> {
-            String email = editTextEmail.getText().toString();
-            String password = editTextPassword.getText().toString();
-            if (!email.equals("") && !password.equals("")) {
-                Intent intent = getIntent().putExtra("LoginSuccess", true)
-                        .putExtra("Email", email)
-                        .putExtra("Password", password);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
-
-        //Hide password by default.
-        editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout_for_fragment);
+        if (fragment == null) {
+            fragment = LoginFragment.newInstance();
+            fragmentManager.beginTransaction()
+                    .add(R.id.frame_layout_for_fragment, fragment)
+                    .commit();
+        }
     }
 }
