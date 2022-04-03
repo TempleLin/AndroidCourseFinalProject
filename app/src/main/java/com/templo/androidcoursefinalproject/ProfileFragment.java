@@ -18,8 +18,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.templo.androidcoursefinalproject.custom_recyclerlist.*;
+import com.templo.androidcoursefinalproject.custom_recyclerlist.CustomRow;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Notes:
@@ -29,10 +36,14 @@ public class ProfileFragment extends Fragment {
 
     private ImageView profilePicImgV;
     private Button loginBtn;
+    private ListView profileOptionsListView;
 
     private static boolean loggedIn = false;
     private static Uri profilePicAfterLoggedIn;
     private static String usernameAfterLoggedIn = "";
+
+    private CustomRecyclerListAdapter customRecyclerListAdapter;
+    private ArrayList<CustomRow> listViewOptions;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -48,8 +59,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+        listViewOptions = new ArrayList<>();
+        listViewOptions.add(new CustomRow("0", "circle", R.drawable.circle));
+        listViewOptions.add(new CustomRow("1", "octagon", R.drawable.octagon));
+        listViewOptions.add(new CustomRow("2", "rectangle", R.drawable.rectangle));
+        customRecyclerListAdapter = new CustomRecyclerListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
     }
 
     @Override
@@ -62,9 +76,11 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         profilePicImgV = requireView().findViewById(R.id.profile_pic_imgv);
         loginBtn = requireView().findViewById(R.id.login_btn);
+        profileOptionsListView = requireView().findViewById(R.id.profile_options_listview);
 
         setChangeProfilePicOnClick();
         setLoginBtnLoginOnClick();
+        profileOptionsListView.setAdapter(customRecyclerListAdapter);
     }
 
     private void setLoginBtnLoginOnClick() {
@@ -85,6 +101,28 @@ public class ProfileFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             selectProfileImgResultLauncher.launch(intent);
         });
+    }
+
+    private void deleteLoginBtn() {
+        //Delete button after logged in. Tutorial reference: https://stackoverflow.com/questions/3995215/add-and-remove-views-in-android-dynamically
+        ViewGroup parent = (ViewGroup) loginBtn.getParent();
+        if (parent != null) {
+            parent.removeView(loginBtn);
+            showUserNameLoginBtnDelete(parent);
+        }
+    }
+
+    private void showUserNameLoginBtnDelete(ViewGroup parent) {
+        TextView showUser = new TextView(getActivity());
+        showUser.setText(usernameAfterLoggedIn);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(64, 0, 0, 0);
+        showUser.setLayoutParams(params);
+        showUser.setTextSize(20);
+        parent.addView(showUser);
     }
 
     private final ActivityResultLauncher<Intent> selectProfileImgResultLauncher = registerForActivityResult(
@@ -115,26 +153,4 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
-
-    private void deleteLoginBtn() {
-        //Delete button after logged in. Tutorial reference: https://stackoverflow.com/questions/3995215/add-and-remove-views-in-android-dynamically
-        ViewGroup parent = (ViewGroup) loginBtn.getParent();
-        if (parent != null) {
-            parent.removeView(loginBtn);
-            showUserNameLoginBtnDelete(parent);
-        }
-    }
-
-    private void showUserNameLoginBtnDelete(ViewGroup parent) {
-        TextView showUser = new TextView(getActivity());
-        showUser.setText(usernameAfterLoggedIn);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(64, 0, 0, 0);
-        showUser.setLayoutParams(params);
-        showUser.setTextSize(20);
-        parent.addView(showUser);
-    }
 }
