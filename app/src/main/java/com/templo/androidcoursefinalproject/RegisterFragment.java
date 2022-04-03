@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class RegisterFragment extends Fragment {
     private EditText editTextRegEmail;
     private EditText editTextRegUserName;
     private EditText editTextRegPassword;
+    private EditText editTextRegPasswordAgain;
     private Button registerBtn;
     private TextView backToLoginTextView;
     private TextView registerResultTextView;
@@ -67,14 +69,26 @@ public class RegisterFragment extends Fragment {
         editTextRegEmail = activity.findViewById(R.id.editTextRegEmail);
         editTextRegUserName = activity.findViewById(R.id.editTextRegName);
         editTextRegPassword = activity.findViewById(R.id.editTextRegPassword);
+        editTextRegPasswordAgain = activity.findViewById(R.id.editTextRegPasswordAgain);
         registerBtn = activity.findViewById(R.id.register_check_btn);
         backToLoginTextView = activity.findViewById(R.id.back_to_login_textview);
         registerResultTextView = activity.findViewById(R.id.registerResultTextView);
+
+        //Hide password by default.
+        editTextRegPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        editTextRegPasswordAgain.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         registerBtn.setOnClickListener(v -> {
             String regEmailVal = editTextRegEmail.getText().toString();
             String regUserNameVal = editTextRegUserName.getText().toString();
             String regPasswordVal = editTextRegPassword.getText().toString();
+            String regPasswordAgainVal = editTextRegPasswordAgain.getText().toString();
+
+            if (!regPasswordVal.equals(regPasswordAgainVal)) {
+                registerResultTextView.setText(R.string.two_password_not_identical);
+                return;
+            }
+
             if (!regEmailVal.equals("") && !regUserNameVal.equals("") && !regPasswordVal.equals("")) {
                 UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
                         .create(UserViewModel.class);

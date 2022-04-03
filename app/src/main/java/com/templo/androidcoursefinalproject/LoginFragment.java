@@ -85,18 +85,31 @@ public class LoginFragment extends Fragment {
             if (!email.equals("") && !password.equals("")) {
                 UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
                         .create(UserViewModel.class);
-                userViewModel.userExists(application, email, password).observe((LifecycleOwner) activity, exists -> {
-                    if (exists) {
+                userViewModel.getUser(application, email, password).observe((LifecycleOwner) activity, user -> {
+                    if (user != null) {
                         loginResultTextView.setText("");
-                        Intent intent = activity.getIntent().putExtra("LoginSuccess", true)
-                                .putExtra("Email", email)
-                                .putExtra("Password", password);
+                        Intent intent = activity.getIntent()
+                                .putExtra("LoginSuccess", true)
+                                .putExtra("UserName", user.getName());
                         activity.setResult(RESULT_OK, intent);
                         activity.finish();
                     } else {
                         loginResultTextView.setText(getResources().getString(R.string.login_details_not_match));
                     }
                 });
+//                userViewModel.userExists(application, email, password).observe((LifecycleOwner) activity, exists -> {
+//                    if (exists) {
+//                        loginResultTextView.setText("");
+//                        Intent intent = activity.getIntent()
+//                                .putExtra("LoginSuccess", true)
+//                                .putExtra("Email", email)
+//                                .putExtra("Password", password);
+//                        activity.setResult(RESULT_OK, intent);
+//                        activity.finish();
+//                    } else {
+//                        loginResultTextView.setText(getResources().getString(R.string.login_details_not_match));
+//                    }
+//                });
             } else {
                 loginResultTextView.setText(getResources().getString(R.string.input_cannot_empty));
             }

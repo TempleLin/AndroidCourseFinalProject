@@ -25,6 +25,9 @@ public interface UserDao {
     @Query("SELECT * FROM user_table WHERE email=:email AND name=:name AND password=:password")
     LiveData<User> getUser(String email, String name, String password);
 
+    @Query("SELECT * FROM user_table WHERE email=:email AND password=:password")
+    LiveData<User> getUser(String email, String password);
+
     @Query("SELECT EXISTS(SELECT * FROM user_table WHERE email=:email AND password=:password)")
     LiveData<Boolean> userExists(String email, String password);
 }

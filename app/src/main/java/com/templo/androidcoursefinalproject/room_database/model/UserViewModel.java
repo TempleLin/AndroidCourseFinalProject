@@ -35,6 +35,10 @@ public class UserViewModel extends AndroidViewModel {
         return repository.getUser(application, email, name, password);
     }
 
+    public LiveData<User> getUser(Application application, String email, String password) {
+        return repository.getUser(application, email, password);
+    }
+
     public LiveData<Boolean> userExists(Application application, String email, String password) {
         return repository.userExists(application, email, password);
     }

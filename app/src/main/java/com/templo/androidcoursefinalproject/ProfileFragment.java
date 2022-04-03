@@ -32,6 +32,7 @@ public class ProfileFragment extends Fragment {
 
     private static boolean loggedIn = false;
     private static Uri profilePicAfterLoggedIn;
+    private static String usernameAfterLoggedIn = "";
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -106,6 +107,7 @@ public class ProfileFragment extends Fragment {
                     if (data != null) {
                         loggedIn = data.getBooleanExtra("LoginSuccess", false);
                         if(loggedIn) {
+                            usernameAfterLoggedIn = data.getStringExtra("UserName");
                             deleteLoginBtn();
                         } else {
                             Toast.makeText(getActivity(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
@@ -125,7 +127,7 @@ public class ProfileFragment extends Fragment {
 
     private void showUserNameLoginBtnDelete(ViewGroup parent) {
         TextView showUser = new TextView(getActivity());
-        showUser.setText("Test User");
+        showUser.setText(usernameAfterLoggedIn);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

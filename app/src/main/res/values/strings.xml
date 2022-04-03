@@ -14,4 +14,6 @@
     <string name="input_cannot_empty">Inputs cannot be Empty.</string>
     <string name="user_already_exists">User Already Exists.</string>
     <string name="back">Back</string>
+    <string name="password_again">Password Again</string>
+    <string name="two_password_not_identical">Two Password Inputs are not Identical.</string>
 </resources>
