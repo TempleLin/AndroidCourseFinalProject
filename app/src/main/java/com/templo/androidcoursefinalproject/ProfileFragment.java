@@ -60,9 +60,9 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         listViewOptions = new ArrayList<>();
-        listViewOptions.add(new CustomRow("0", "circle", R.drawable.circle));
-        listViewOptions.add(new CustomRow("1", "octagon", R.drawable.octagon));
-        listViewOptions.add(new CustomRow("2", "rectangle", R.drawable.rectangle));
+        listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
+        listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
+        listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
         customRecyclerListAdapter = new CustomRecyclerListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
     }
 

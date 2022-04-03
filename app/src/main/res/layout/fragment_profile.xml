@@ -46,7 +46,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="30dp" />
+                        android:layout_height="30dp"
+                        app:cardElevation="0dp" />
 
                     <Button
                         android:id="@+id/login_btn"
