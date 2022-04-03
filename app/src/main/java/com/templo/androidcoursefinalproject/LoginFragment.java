@@ -69,10 +69,10 @@ public class LoginFragment extends Fragment {
         activity = requireActivity();
         application = activity.getApplication();
 
-        loginBtn = activity.findViewById(R.id.register_check_btn);
+        loginBtn = activity.findViewById(R.id.login_check_btn);
         registerTextView = activity.findViewById(R.id.registerTextView);
-        editTextEmail = activity.findViewById(R.id.editTextRegEmail);
-        editTextPassword = activity.findViewById(R.id.editTextRegPassword);
+        editTextEmail = activity.findViewById(R.id.editTextEmail);
+        editTextPassword = activity.findViewById(R.id.editTextPassword);
         loginResultTextView = activity.findViewById(R.id.loginResultTextView);
 
         registerTextView.setOnClickListener(v -> {
@@ -87,6 +87,7 @@ public class LoginFragment extends Fragment {
                         .create(UserViewModel.class);
                 userViewModel.userExists(application, email, password).observe((LifecycleOwner) activity, exists -> {
                     if (exists) {
+                        loginResultTextView.setText("");
                         Intent intent = activity.getIntent().putExtra("LoginSuccess", true)
                                 .putExtra("Email", email)
                                 .putExtra("Password", password);

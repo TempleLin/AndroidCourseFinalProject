@@ -1,29 +1,26 @@
 package com.templo.androidcoursefinalproject;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Application;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Objects;
+import com.templo.androidcoursefinalproject.room_database.model.User;
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RegisterFragment extends Fragment {
     private Activity activity;
@@ -34,6 +31,7 @@ public class RegisterFragment extends Fragment {
     private EditText editTextRegPassword;
     private Button registerBtn;
     private TextView backToLoginTextView;
+    private TextView registerResultTextView;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -71,6 +69,29 @@ public class RegisterFragment extends Fragment {
         editTextRegPassword = activity.findViewById(R.id.editTextRegPassword);
         registerBtn = activity.findViewById(R.id.register_check_btn);
         backToLoginTextView = activity.findViewById(R.id.back_to_login_textview);
+        registerResultTextView = activity.findViewById(R.id.registerResultTextView);
+
+        registerBtn.setOnClickListener(v -> {
+            String regEmailVal = editTextRegEmail.getText().toString();
+            String regUserNameVal = editTextRegUserName.getText().toString();
+            String regPasswordVal = editTextRegPassword.getText().toString();
+            if (!regEmailVal.equals("") && !regUserNameVal.equals("") && !regPasswordVal.equals("")) {
+                UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
+                        .create(UserViewModel.class);
+
+                userViewModel.userExists(application, regEmailVal, regPasswordVal).observe((LifecycleOwner) activity, exists -> {
+                    if (exists) {
+                        registerResultTextView.setText(application.getString(R.string.user_already_exists));
+                    } else {
+                        UserViewModel.insertOnlyOne(application, new User(regUserNameVal, regEmailVal, regPasswordVal));
+                        registerResultTextView.setText("");
+                        ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
+                    }
+                });
+            } else {
+                registerResultTextView.setText(application.getString(R.string.input_cannot_empty));
+            }
+        });
 
         backToLoginTextView.setOnClickListener(v -> {
             ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();

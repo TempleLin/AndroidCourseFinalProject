@@ -20,6 +20,8 @@ import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
  * Known Issues:
  *  1.Directories inside the directory for the website to show to WebView shouldn't have
  *      sub-folders with "_" prefix. it will cause loading assets for website generate error.
+ *  2.Calling getResources().getString() or .getString() inside fragment might cause errors.
+ *      Use getActivity().getApplication().getString() instead.
  *
  * Notes:
  *  1.Networking is turned on. (<uses-permission android:name="android.permission.INTERNET" /> under AndroidManifest.xml.)
