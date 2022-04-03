@@ -12,7 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
-import com.templo.androidcoursefinalproject.room_database.util.UserRoomDatabase;
 
 /**
  * Plans:
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigatin_view);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_fragment);
         assert navHostFragment != null;
         NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
@@ -70,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //
 
-        UserViewModel.insertOnlyOne(getApplication(), new User("John", "test@jmail.com", "1234"));
-        userViewModel.getUser(getApplication(), "test@jmail.com", "John", "1234").observe(this, user -> {
-            if (user == null) {
-                Snackbar.make(findViewById(R.id.bottom_navigatin_view), "USER NULL", Snackbar.LENGTH_SHORT).show();
-            } else {
-                Snackbar.make(findViewById(R.id.bottom_navigatin_view), user.toString(), Snackbar.LENGTH_SHORT).show();
-            }
-        });
+//        UserViewModel.insertOnlyOne(getApplication(), new User("John", "test@jmail.com", "1234"));
+//        userViewModel.getUser(getApplication(), "test@jmail.com", "John", "1234").observe(this, user -> {
+//            if (user == null) {
+//                Snackbar.make(findViewById(R.id.bottom_navigation_view), "USER NULL", Snackbar.LENGTH_SHORT).show();
+//            } else {
+//                Snackbar.make(findViewById(R.id.bottom_navigation_view), user.toString(), Snackbar.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

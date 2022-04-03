@@ -11,6 +11,7 @@ import android.widget.EditText;
 public class LoginRegisterActivity extends AppCompatActivity {
 
     private Button loginBtn;
+    private EditText editTextEmail;
     private EditText editTextPassword;
 
     @Override
@@ -18,12 +19,19 @@ public class LoginRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
         loginBtn = findViewById(R.id.login_check_btn);
+        editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 
         loginBtn.setOnClickListener(v -> {
-            Intent intent = getIntent().putExtra("LoginSuccess", true);
-            setResult(RESULT_OK, intent);
-            finish();
+            String email = editTextEmail.getText().toString();
+            String password = editTextPassword.getText().toString();
+            if (!email.equals("") && !password.equals("")) {
+                Intent intent = getIntent().putExtra("LoginSuccess", true)
+                        .putExtra("Email", email)
+                        .putExtra("Password", password);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
         });
 
         //Hide password by default.
