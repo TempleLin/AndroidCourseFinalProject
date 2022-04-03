@@ -70,7 +70,7 @@ public class LoginFragment extends Fragment {
         editTextPassword = activity.findViewById(R.id.editTextPassword);
 
         registerTextView.setOnClickListener(v -> {
-//            registerResultLauncher.launch();
+            ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
         });
 
         loginBtn.setOnClickListener(v -> {
