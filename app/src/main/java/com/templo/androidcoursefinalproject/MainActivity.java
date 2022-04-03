@@ -1,20 +1,18 @@
 package com.templo.androidcoursefinalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
+import com.templo.androidcoursefinalproject.room_database.util.UserRoomDatabase;
 
 /**
  * Plans:
@@ -61,15 +59,24 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TAG", "Observer called!");
             StringBuilder toShow = new StringBuilder();
             for(User user : users) {
-                toShow.append(user.getName())
-                        .append('-')
-                        .append(user.getEmail())
-                        .append('-')
-                        .append(user.getPassword())
-                        .append('\n');
+                toShow.append(user.toString());
             }
             //This debug.log might not work, but the value is correct.
             Log.d("ROOM_DATABASE", toShow.toString());
+        });
+
+//        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+//            UserRoomDatabase.getDatabase(this).contactDao().deleteAll();
+//        });
+//
+
+        UserViewModel.insertOnlyOne(getApplication(), new User("John", "test@jmail.com", "1234"));
+        userViewModel.getUser(getApplication(), "test@jmail.com", "John", "1234").observe(this, user -> {
+            if (user == null) {
+                Snackbar.make(findViewById(R.id.bottom_navigatin_view), "USER NULL", Snackbar.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(findViewById(R.id.bottom_navigatin_view), user.toString(), Snackbar.LENGTH_SHORT).show();
+            }
         });
     }
 }

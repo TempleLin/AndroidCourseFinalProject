@@ -22,7 +22,7 @@ public abstract class UserRoomDatabase extends RoomDatabase {
     private static volatile UserRoomDatabase INSTANCE;
 
     //RoomDatabase These abstract methods returning DAO to get to Entities.
-    public abstract UserDao contactDao();
+    public abstract UserDao userDao();
 
     public static final int NUMBER_OF_THREADS = 4;
 

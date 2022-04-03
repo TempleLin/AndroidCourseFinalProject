@@ -15,7 +15,7 @@ public class UserRepository {
 
     public UserRepository(Application application) {
         UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
-        userDao = db.contactDao();
+        userDao = db.userDao();
         allContacts = userDao.getAllContacts();
     }
 
@@ -29,5 +29,9 @@ public class UserRepository {
             //.insert must be used in the background thread, that's why it's in .execute callback.
             userDao.insert(user);
         });
+    }
+    public LiveData<User> getUser(Application application, String email, String name, String password) {
+        UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
+        return db.userDao().getUser(email, name, password);
     }
 }

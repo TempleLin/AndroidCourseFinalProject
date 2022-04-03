@@ -21,4 +21,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user_table ORDER BY name ASC") //ASC means ascending.
     LiveData<List<User>> getAllContacts(); //Data is encapsulated by LiveData.
+
+    @Query("SELECT * FROM user_table WHERE email=:email AND name=:name AND password=:password")
+    LiveData<User> getUser(String email, String name, String password);
 }
