@@ -28,6 +28,11 @@ public class RegisterFragment extends Fragment {
     private Activity activity;
     private Application application;
 
+    private EditText editTextRegEmail;
+    private EditText editTextRegUserName;
+    private EditText editTextRegPassword;
+    private Button registerBtn;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -58,5 +63,10 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activity = requireActivity();
         application = activity.getApplication();
+
+        editTextRegEmail = activity.findViewById(R.id.editTextRegEmail);
+        editTextRegUserName = activity.findViewById(R.id.editTextRegName);
+        editTextRegPassword = activity.findViewById(R.id.editTextRegPassword);
+        registerBtn = activity.findViewById(R.id.register_check_btn);
     }
 }

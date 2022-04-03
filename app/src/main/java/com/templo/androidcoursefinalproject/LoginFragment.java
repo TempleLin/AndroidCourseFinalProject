@@ -64,10 +64,10 @@ public class LoginFragment extends Fragment {
         activity = requireActivity();
         application = activity.getApplication();
 
-        loginBtn = activity.findViewById(R.id.login_check_btn);
+        loginBtn = activity.findViewById(R.id.register_check_btn);
         registerTextView = activity.findViewById(R.id.registerTextView);
-        editTextEmail = activity.findViewById(R.id.editTextEmail);
-        editTextPassword = activity.findViewById(R.id.editTextPassword);
+        editTextEmail = activity.findViewById(R.id.editTextRegEmail);
+        editTextPassword = activity.findViewById(R.id.editTextRegPassword);
 
         registerTextView.setOnClickListener(v -> {
             ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
