@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +36,7 @@ public class LoginFragment extends Fragment {
     private TextView registerTextView;
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private TextView loginResultTextView;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -68,6 +73,7 @@ public class LoginFragment extends Fragment {
         registerTextView = activity.findViewById(R.id.registerTextView);
         editTextEmail = activity.findViewById(R.id.editTextRegEmail);
         editTextPassword = activity.findViewById(R.id.editTextRegPassword);
+        loginResultTextView = activity.findViewById(R.id.loginResultTextView);
 
         registerTextView.setOnClickListener(v -> {
             ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
@@ -77,11 +83,21 @@ public class LoginFragment extends Fragment {
             String email = editTextEmail.getText().toString();
             String password = editTextPassword.getText().toString();
             if (!email.equals("") && !password.equals("")) {
-                Intent intent = activity.getIntent().putExtra("LoginSuccess", true)
-                        .putExtra("Email", email)
-                        .putExtra("Password", password);
-                activity.setResult(RESULT_OK, intent);
-                activity.finish();
+                UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
+                        .create(UserViewModel.class);
+                userViewModel.userExists(application, email, password).observe((LifecycleOwner) activity, exists -> {
+                    if (exists) {
+                        Intent intent = activity.getIntent().putExtra("LoginSuccess", true)
+                                .putExtra("Email", email)
+                                .putExtra("Password", password);
+                        activity.setResult(RESULT_OK, intent);
+                        activity.finish();
+                    } else {
+                        loginResultTextView.setText(getResources().getString(R.string.login_details_not_match));
+                    }
+                });
+            } else {
+                loginResultTextView.setText(getResources().getString(R.string.input_cannot_empty));
             }
         });
 

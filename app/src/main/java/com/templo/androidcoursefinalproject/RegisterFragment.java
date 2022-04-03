@@ -2,6 +2,7 @@ package com.templo.androidcoursefinalproject;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class RegisterFragment extends Fragment {
     private EditText editTextRegUserName;
     private EditText editTextRegPassword;
     private Button registerBtn;
+    private TextView backToLoginTextView;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -68,5 +70,10 @@ public class RegisterFragment extends Fragment {
         editTextRegUserName = activity.findViewById(R.id.editTextRegName);
         editTextRegPassword = activity.findViewById(R.id.editTextRegPassword);
         registerBtn = activity.findViewById(R.id.register_check_btn);
+        backToLoginTextView = activity.findViewById(R.id.back_to_login_textview);
+
+        backToLoginTextView.setOnClickListener(v -> {
+            ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
+        });
     }
 }

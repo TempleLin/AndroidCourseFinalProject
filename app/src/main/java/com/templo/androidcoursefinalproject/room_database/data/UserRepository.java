@@ -34,4 +34,9 @@ public class UserRepository {
         UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
         return db.userDao().getUser(email, name, password);
     }
+
+    public LiveData<Boolean> userExists(Application application, String email, String password) {
+        UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
+        return db.userDao().userExists(email, password);
+    }
 }

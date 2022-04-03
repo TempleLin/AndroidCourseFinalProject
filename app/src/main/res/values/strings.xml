@@ -10,4 +10,7 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="register">Register</string>
+    <string name="login_details_not_match">Email or Password not Match.</string>
+    <string name="input_cannot_empty">Inputs cannot be Empty.</string>
+    <string name="back">Back</string>
 </resources>

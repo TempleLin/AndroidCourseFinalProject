@@ -49,6 +49,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/back_to_login_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="13dp"
+                android:text="@string/back"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.654"
+                app:layout_constraintStart_toEndOf="@+id/register_check_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
             <Button
                 android:id="@+id/register_check_btn"
                 android:layout_width="170dp"
@@ -58,10 +74,10 @@
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.211"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
