@@ -1,6 +1,9 @@
 package com.templo.androidcoursefinalproject;
 
+import static android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
+
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -81,6 +85,9 @@ public class HomeFragment extends Fragment {
         homeFragWV.setWebChromeClient(new WebChromeClient());
         //This is required for setting custom events such as url loading overrides.
         homeFragWV.setWebViewClient(new Callback());
+
+//        webSettings.setMixedContentMode(MIXED_CONTENT_ALWAYS_ALLOW);
+//        CookieManager.getInstance().setAcceptThirdPartyCookies(homeFragWV, true);
 
         homeFragWV.loadUrl("file:///android_asset/ItemsListsWeb/index.html");
 //        homeFragWV.loadUrl("javascript:(function(){alert('Hello world!');})()");

@@ -32,6 +32,7 @@ import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
  *          1.https://code.tutsplus.com/tutorials/how-to-code-a-bottom-navigation-bar-for-an-android-app--cms-30305
  *          2.Last step to setup Controller, use the second answer to this post's question:
  *              https://stackoverflow.com/questions/50577356/android-jetpack-navigation-bottomnavigationview-with-youtube-or-instagram-like
+ *  4.tsparticles library used in webview might not work with some lower versions of Android phone.
  */
 public class MainActivity extends AppCompatActivity {
 
