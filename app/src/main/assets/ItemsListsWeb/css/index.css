@@ -8,8 +8,23 @@ body {
   height: 100%;
 }
 
+.imgsContainer {
+  width: 90%;
+  margin-left: 10%;
+  position: relative;
+  z-index: 100;
+}
+
 img {
-  width: 100%;
+  display: inline-block;
+  width: 45%;
+  height: 30vh;
+  z-index: 1000;
+  border-radius: 10%;
+}
+
+#tsparticles {
+  z-index: 0;
 }
 
 /*# sourceMappingURL=index.css.map */

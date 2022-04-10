@@ -6,6 +6,20 @@ body {
   width: 100%;
   height: 100%;
 }
+.imgsContainer {
+  width: 90%;
+  margin-left: 10%;
+  //Setting position to relative and high z-index can let div show in front of div with lower z-index.
+  position: relative;
+  z-index: 100;
+}
 img {
-  width: 100%;
+  display: inline-block;
+  width: 45%;
+  height: 30vh;
+  z-index: 1000; //Remember to set z-index of images as well.
+  border-radius: 10%;
+}
+#tsparticles {
+  z-index: 0;
 }
