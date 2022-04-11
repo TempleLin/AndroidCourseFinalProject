@@ -42,4 +42,8 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<Boolean> userExists(Application application, String email, String password) {
         return repository.userExists(application, email, password);
     }
+
+    public void updateUserProfilePic(Application application, int id, String profile_pic) {
+        repository.updateUserProfilePic(application, id, profile_pic);
+    }
 }

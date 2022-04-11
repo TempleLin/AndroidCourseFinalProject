@@ -44,4 +44,9 @@ public class UserRepository {
         UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
         return db.userDao().userExists(email, password);
     }
+
+    public void updateUserProfilePic(Application application, int id, String profile_pic) {
+        UserRoomDatabase db = UserRoomDatabase.getDatabase(application);
+        db.userDao().updateUserProfilePic(id, profile_pic);
+    }
 }
