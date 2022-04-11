@@ -1,4 +1,4 @@
-package com.templo.androidcoursefinalproject.custom_recyclerlist;
+package com.templo.androidcoursefinalproject.custom_list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import com.templo.androidcoursefinalproject.R;
 
 import java.util.List;
 
-public class CustomRecyclerListAdapter extends ArrayAdapter<CustomRow> {
+public class CustomListAdapter extends ArrayAdapter<CustomRow> {
 
-    public CustomRecyclerListAdapter(Context context, int resource, List<CustomRow> shapeList) {
+    public CustomListAdapter(Context context, int resource, List<CustomRow> shapeList) {
         super(context, resource, shapeList);
     }
 

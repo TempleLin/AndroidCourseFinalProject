@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 //First arg: array of Entities. Second arg: Version to give to the database. Third arg: Whether or not to export schema file.
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class}, version = 2, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
 
     //The singleton instance.
@@ -36,6 +36,9 @@ public abstract class UserRoomDatabase extends RoomDatabase {
                     //"name" parameter is the name the database name.
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), UserRoomDatabase.class, "contact_database")
                             .addCallback(sRoomDatabaseCallback) //Will call this RoomDatabase.Callback object's onCreate method as callback when build is finished.
+                            //If you don’t want to provide migrations and you specifically want your database to be cleared when you upgrade the version.
+                            //(If this is not added, error will happen if update database version but not set migration path.)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

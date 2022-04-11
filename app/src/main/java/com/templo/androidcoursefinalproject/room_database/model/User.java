@@ -21,10 +21,14 @@ public class User {
     @ColumnInfo(name = "password")
     private String password;
 
-    public User(@NonNull String name, String email, String password) {
+    @ColumnInfo(name = "profile_pic")
+    private String profile_pic;
+
+    public User(String name, String email, String password, String profile_pic) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.profile_pic = profile_pic;
     }
 
     @NonNull
@@ -35,6 +39,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", profile_pic='" + profile_pic + '\'' +
                 '}';
     }
 
@@ -61,5 +66,11 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public String getProfile_pic() {
+        return profile_pic;
+    }
+    public void setProfile_pic(String profile_pic) {
+        this.profile_pic = profile_pic;
     }
 }

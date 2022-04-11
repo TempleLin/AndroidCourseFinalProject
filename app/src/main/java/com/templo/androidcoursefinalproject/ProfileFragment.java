@@ -22,11 +22,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.templo.androidcoursefinalproject.custom_recyclerlist.*;
-import com.templo.androidcoursefinalproject.custom_recyclerlist.CustomRow;
+import com.templo.androidcoursefinalproject.custom_list.*;
+import com.templo.androidcoursefinalproject.custom_list.CustomRow;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Notes:
@@ -42,7 +41,7 @@ public class ProfileFragment extends Fragment {
     private static Uri profilePicAfterLoggedIn;
     private static String usernameAfterLoggedIn = "";
 
-    private CustomRecyclerListAdapter customRecyclerListAdapter;
+    private CustomListAdapter customListAdapter;
     private ArrayList<CustomRow> listViewOptions;
 
     public ProfileFragment() {
@@ -63,7 +62,7 @@ public class ProfileFragment extends Fragment {
         listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
         listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
         listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
-        customRecyclerListAdapter = new CustomRecyclerListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
+        customListAdapter = new CustomListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
     }
 
     @Override
@@ -80,7 +79,7 @@ public class ProfileFragment extends Fragment {
 
         setChangeProfilePicOnClick();
         setLoginBtnLoginOnClick();
-        profileOptionsListView.setAdapter(customRecyclerListAdapter);
+        profileOptionsListView.setAdapter(customListAdapter);
     }
 
     private void setLoginBtnLoginOnClick() {

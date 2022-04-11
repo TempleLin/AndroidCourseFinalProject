@@ -97,7 +97,7 @@ public class RegisterFragment extends Fragment {
                     if (exists) {
                         registerResultTextView.setText(application.getString(R.string.user_already_exists));
                     } else {
-                        UserViewModel.insertOnlyOne(application, new User(regUserNameVal, regEmailVal, regPasswordVal));
+                        UserViewModel.insertOnlyOne(application, new User(regUserNameVal, regEmailVal, regPasswordVal, null));
                         registerResultTextView.setText("");
                         ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
                     }

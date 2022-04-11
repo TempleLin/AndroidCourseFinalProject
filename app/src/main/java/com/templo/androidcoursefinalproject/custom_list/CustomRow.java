@@ -1,4 +1,4 @@
-package com.templo.androidcoursefinalproject.custom_recyclerlist;
+package com.templo.androidcoursefinalproject.custom_list;
 
 public class CustomRow {
     private String id;
