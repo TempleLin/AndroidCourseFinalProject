@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,11 +60,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        listViewOptions = new ArrayList<>();
-        listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
-        listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
-        listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
-        customListAdapter = new CustomListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
     }
 
     @Override
@@ -79,7 +76,30 @@ public class ProfileFragment extends Fragment {
 
         setChangeProfilePicOnClick();
         setLoginBtnLoginOnClick();
+        setProfileListViewOptions();
+    }
+
+    private void setProfileListViewOptions() {
+        listViewOptions = new ArrayList<>();
+        listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
+        listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
+        listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
+        customListAdapter = new CustomListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
         profileOptionsListView.setAdapter(customListAdapter);
+        profileOptionsListView.setOnItemClickListener((parent, view1, position, id) -> {
+            switch (position) {
+                case 0: //Settings
+                    //TODO: Show Settings activity.(Current confirmed options: logout.)
+                    Log.d("ProfileOptionsListViewClick", "Settings clicked!");
+                    break;
+                case 1:
+                    //TODO: Show MyOrders activity.
+                    break;
+                case 2:
+                    //TODO: Show OnMyShelf activity.
+                    break;
+            }
+        });
     }
 
     private void setLoginBtnLoginOnClick() {
