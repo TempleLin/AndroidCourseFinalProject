@@ -39,6 +39,7 @@ public abstract class UserRoomDatabase extends RoomDatabase {
                             //If you don’t want to provide migrations and you specifically want your database to be cleared when you upgrade the version.
                             //(If this is not added, error will happen if update database version but not set migration path.)
                             .fallbackToDestructiveMigration()
+                            .allowMainThreadQueries() //Allow executing queries on main thread. (Not recommended.)
                             .build();
                 }
             }

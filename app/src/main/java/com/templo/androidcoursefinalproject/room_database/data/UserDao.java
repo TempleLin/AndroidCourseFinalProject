@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.templo.androidcoursefinalproject.room_database.model.User;
 
@@ -30,4 +31,7 @@ public interface UserDao {
 
     @Query("SELECT EXISTS(SELECT * FROM user_table WHERE email=:email AND password=:password)")
     LiveData<Boolean> userExists(String email, String password);
+
+    @Query("UPDATE user_table SET profile_pic = :profile_pic WHERE id=:id")
+    void updateUserProfilePic(int id, String profile_pic);
 }

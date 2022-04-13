@@ -1,7 +1,10 @@
 package com.templo.androidcoursefinalproject;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,8 +13,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +31,10 @@ import android.widget.Toast;
 
 import com.templo.androidcoursefinalproject.custom_list.*;
 import com.templo.androidcoursefinalproject.custom_list.CustomRow;
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +42,7 @@ import java.util.ArrayList;
  *  1.Profile picture's round bc its parent cardview's conerRadius is set to 100dp.
  */
 public class ProfileFragment extends Fragment {
+    private Application application;
 
     private ImageView profilePicImgV;
     private Button loginBtn;
@@ -42,6 +51,7 @@ public class ProfileFragment extends Fragment {
     private static boolean loggedIn = false;
     private static Uri profilePicAfterLoggedIn;
     private static String usernameAfterLoggedIn = "";
+    private static int userIDAfterLoggedIn;
 
     private CustomListAdapter customListAdapter;
     private ArrayList<CustomRow> listViewOptions;
@@ -70,6 +80,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        application = requireActivity().getApplication();
         profilePicImgV = requireView().findViewById(R.id.profile_pic_imgv);
         loginBtn = requireView().findViewById(R.id.login_btn);
         profileOptionsListView = requireView().findViewById(R.id.profile_options_listview);
@@ -163,6 +174,20 @@ public class ProfileFragment extends Fragment {
                     Intent data = result.getData();
                     if (data != null) {
                         Uri selectedImg = data.getData();
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImg);
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            // In case you want to compress your image, here it's at 40%
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+                            byte[] byteArray = byteArrayOutputStream.toByteArray();
+                            String imageToString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                            UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
+                                    .create(UserViewModel.class);
+                            userViewModel.updateUserProfilePic(application, userIDAfterLoggedIn, imageToString);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         profilePicImgV.setImageURI(selectedImg);
                         profilePicAfterLoggedIn = selectedImg; //Save image to buffer.
                     }
@@ -177,6 +202,7 @@ public class ProfileFragment extends Fragment {
                         loggedIn = data.getBooleanExtra("LoginSuccess", false);
                         if(loggedIn) {
                             usernameAfterLoggedIn = data.getStringExtra("UserName");
+                            userIDAfterLoggedIn = data.getIntExtra("UserID", 0);
                             deleteLoginBtn();
                         } else {
                             Toast.makeText(getActivity(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();

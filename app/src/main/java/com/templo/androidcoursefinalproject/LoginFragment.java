@@ -90,6 +90,7 @@ public class LoginFragment extends Fragment {
                         loginResultTextView.setText("");
                         Intent intent = activity.getIntent()
                                 .putExtra("LoginSuccess", true)
+                                .putExtra("UserID", user.getId())
                                 .putExtra("UserName", user.getName());
                         activity.setResult(RESULT_OK, intent);
                         activity.finish();
