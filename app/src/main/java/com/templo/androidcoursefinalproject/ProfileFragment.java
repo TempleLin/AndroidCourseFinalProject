@@ -81,25 +81,37 @@ public class ProfileFragment extends Fragment {
 
     private void setProfileListViewOptions() {
         listViewOptions = new ArrayList<>();
-        listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
-        listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
-        listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
         customListAdapter = new CustomListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
         profileOptionsListView.setAdapter(customListAdapter);
+        setMainListViewOptions();
         profileOptionsListView.setOnItemClickListener((parent, view1, position, id) -> {
-            switch (position) {
-                case 0: //Settings
-                    //TODO: Show Settings activity.(Current confirmed options: logout.)
+            switch (listViewOptions.get(position).getId()) {
+                case "0": //Settings
+                    //TODO: Show Settings list.(Current confirmed options: logout.)
                     Log.d("ProfileOptionsListViewClick", "Settings clicked!");
+                    listViewOptions.clear();
+                    listViewOptions.add(new CustomRow("3", "Logout", R.drawable.ic_exit_foreground));
+                    customListAdapter.notifyDataSetChanged();
                     break;
-                case 1:
-                    //TODO: Show MyOrders activity.
+                case "1":
+                    //TODO: Show MyOrders list.
                     break;
-                case 2:
-                    //TODO: Show OnMyShelf activity.
+                case "2":
+                    //TODO: Show OnMyShelf list.
+                    break;
+                case "3": //Logout button, only appears when "Settings" clicked.
+                    setMainListViewOptions();
                     break;
             }
         });
+    }
+
+    private void setMainListViewOptions() {
+        listViewOptions.clear();
+        listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
+        listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
+        listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
+        customListAdapter.notifyDataSetChanged();
     }
 
     private void setLoginBtnLoginOnClick() {
