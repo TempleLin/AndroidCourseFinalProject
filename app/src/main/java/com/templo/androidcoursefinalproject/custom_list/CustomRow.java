@@ -1,20 +1,20 @@
 package com.templo.androidcoursefinalproject.custom_list;
 
 public class CustomRow {
-    private String id;
+    private int id;
     private String textValue;
     private int image;
 
-    public CustomRow(String id, String textValue, int image) {
+    public CustomRow(int id, String textValue, int image) {
         this.id = id;
         this.textValue = textValue;
         this.image = image;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
     public String getTextValue() {

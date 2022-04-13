@@ -86,20 +86,20 @@ public class ProfileFragment extends Fragment {
         setMainListViewOptions();
         profileOptionsListView.setOnItemClickListener((parent, view1, position, id) -> {
             switch (listViewOptions.get(position).getId()) {
-                case "0": //Settings
+                case 0: //Settings
                     //TODO: Show Settings list.(Current confirmed options: logout.)
                     Log.d("ProfileOptionsListViewClick", "Settings clicked!");
                     listViewOptions.clear();
-                    listViewOptions.add(new CustomRow("3", "Logout", R.drawable.ic_exit_foreground));
+                    listViewOptions.add(new CustomRow(3, "Logout", R.drawable.ic_exit_foreground));
                     customListAdapter.notifyDataSetChanged();
                     break;
-                case "1":
-                    //TODO: Show MyOrders list.
+                case 1:
+                    //TODO: Show MyOrders activity.
                     break;
-                case "2":
-                    //TODO: Show OnMyShelf list.
+                case 2:
+                    //TODO: Show OnMyShelf activity.
                     break;
-                case "3": //Logout button, only appears when "Settings" clicked.
+                case 3: //Logout button, only appears when "Settings" clicked.
                     setMainListViewOptions();
                     break;
             }
@@ -108,9 +108,9 @@ public class ProfileFragment extends Fragment {
 
     private void setMainListViewOptions() {
         listViewOptions.clear();
-        listViewOptions.add(new CustomRow("0", "Settings", R.drawable.settings));
-        listViewOptions.add(new CustomRow("1", "My Orders", R.drawable.shopping_bag));
-        listViewOptions.add(new CustomRow("2", "On my Shelf", R.drawable.shelf));
+        listViewOptions.add(new CustomRow(0, "Settings", R.drawable.settings));
+        listViewOptions.add(new CustomRow(1, "My Orders", R.drawable.shopping_bag));
+        listViewOptions.add(new CustomRow(2, "On my Shelf", R.drawable.shelf));
         customListAdapter.notifyDataSetChanged();
     }
 
