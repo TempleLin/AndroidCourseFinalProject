@@ -29,9 +29,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.templo.androidcoursefinalproject.custom_list.*;
 import com.templo.androidcoursefinalproject.custom_list.CustomRow;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
+import com.templo.androidcoursefinalproject.room_database.util.UserRoomDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -51,7 +53,11 @@ public class ProfileFragment extends Fragment {
     private static boolean loggedIn = false;
     private static Uri profilePicAfterLoggedIn;
     private static String usernameAfterLoggedIn = "";
-    private static int userIDAfterLoggedIn;
+
+    public final static int USER_NOT_LOGIN_ID = -100;
+    public final static String USER_NOT_LOGIN_NAME = "";
+
+    private static int userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
 
     private CustomListAdapter customListAdapter;
     private ArrayList<CustomRow> listViewOptions;
@@ -112,6 +118,8 @@ public class ProfileFragment extends Fragment {
                     break;
                 case 3: //Logout button, only appears when "Settings" clicked.
                     setMainListViewOptions();
+                    usernameAfterLoggedIn = USER_NOT_LOGIN_NAME;
+                    userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
                     break;
             }
         });
@@ -139,9 +147,13 @@ public class ProfileFragment extends Fragment {
 
     private void setChangeProfilePicOnClick() {
         profilePicImgV.setOnClickListener(v -> {
-            //Pick images from device. Tutorial reference: https://www.youtube.com/watch?v=H1ja8gvTtBE
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            selectProfileImgResultLauncher.launch(intent);
+            if (usernameAfterLoggedIn.equals(USER_NOT_LOGIN_NAME) && userIDAfterLoggedIn == USER_NOT_LOGIN_ID) {
+                Snackbar.make(profilePicImgV, "User not logged in!", Snackbar.LENGTH_SHORT).show();
+            } else {
+                //Pick images from device. Tutorial reference: https://www.youtube.com/watch?v=H1ja8gvTtBE
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                selectProfileImgResultLauncher.launch(intent);
+            }
         });
     }
 
@@ -184,7 +196,9 @@ public class ProfileFragment extends Fragment {
 
                             UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
                                     .create(UserViewModel.class);
-                            userViewModel.updateUserProfilePic(application, userIDAfterLoggedIn, imageToString);
+                            UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+                                userViewModel.updateUserProfilePic(application, userIDAfterLoggedIn, imageToString);
+                            });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
