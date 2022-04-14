@@ -91,6 +91,7 @@ public class LoginFragment extends Fragment {
                         Intent intent = activity.getIntent()
                                 .putExtra("LoginSuccess", true)
                                 .putExtra("UserID", user.getId())
+                                .putExtra("ProfilePic", user.getProfile_pic())
                                 .putExtra("UserName", user.getName());
                         activity.setResult(RESULT_OK, intent);
                         activity.finish();

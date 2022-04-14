@@ -5,7 +5,9 @@ import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -51,7 +53,7 @@ public class ProfileFragment extends Fragment {
     private ListView profileOptionsListView;
 
     private static boolean loggedIn = false;
-    private static Uri profilePicAfterLoggedIn;
+    private static Bitmap profilePicAfterLoggedIn;
     private static String usernameAfterLoggedIn = "";
 
     public final static int USER_NOT_LOGIN_ID = -100;
@@ -135,8 +137,8 @@ public class ProfileFragment extends Fragment {
 
     private void setLoginBtnLoginOnClick() {
         if (loggedIn) {
-            deleteLoginBtn();
-            profilePicImgV.setImageURI(profilePicAfterLoggedIn);
+            deleteLoginBtn_showUsername();
+            profilePicImgV.setImageBitmap(profilePicAfterLoggedIn);
             return;
         }
         loginBtn.setOnClickListener(v -> {
@@ -157,7 +159,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void deleteLoginBtn() {
+    private void deleteLoginBtn_showUsername() {
         //Delete button after logged in. Tutorial reference: https://stackoverflow.com/questions/3995215/add-and-remove-views-in-android-dynamically
         ViewGroup parent = (ViewGroup) loginBtn.getParent();
         if (parent != null) {
@@ -203,7 +205,21 @@ public class ProfileFragment extends Fragment {
                             e.printStackTrace();
                         }
                         profilePicImgV.setImageURI(selectedImg);
-                        profilePicAfterLoggedIn = selectedImg; //Save image to buffer.
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            try { //Save image to buffer.
+                                profilePicAfterLoggedIn = ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireContext().getContentResolver(), selectedImg));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+                                profilePicAfterLoggedIn = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImg);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+//                        Bitmap selectedImgBitmap = ImageDecoder.decodeBitmap(selectedImg, )
+//                        profilePicAfterLoggedIn = selectedImg;
                     }
                 }
             });
@@ -217,7 +233,13 @@ public class ProfileFragment extends Fragment {
                         if(loggedIn) {
                             usernameAfterLoggedIn = data.getStringExtra("UserName");
                             userIDAfterLoggedIn = data.getIntExtra("UserID", 0);
-                            deleteLoginBtn();
+                            deleteLoginBtn_showUsername();
+
+                            //Set profile pic.
+                            byte[] encodeByte = Base64.decode(data.getStringExtra("ProfilePic"), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                            profilePicImgV.setImageBitmap(bitmap);
+                            profilePicAfterLoggedIn = bitmap;
                         } else {
                             Toast.makeText(getActivity(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
                         }
