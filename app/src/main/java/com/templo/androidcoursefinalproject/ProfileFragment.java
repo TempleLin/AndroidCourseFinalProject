@@ -126,6 +126,7 @@ public class ProfileFragment extends Fragment {
                 case ProfileListViewEdits.ON_MY_SHELF_ID:
                     listViewOptions.clear();
                     listViewOptions.add(new CustomRow(ProfileListViewEdits.MY_SELLING_ITEMS_ID, "My Selling Items", R.drawable.ic_money_foreground));
+                    listViewOptions.add(new CustomRow(ProfileListViewEdits.UPLOAD_ITEM_ID, "Upload an Item", R.drawable.ic_upload_foreground));
                     listViewOptions.add(new CustomRow(ProfileListViewEdits.BACK_ID, "Back", R.drawable.ic_arrow_back_foreground));
                     customListAdapter.notifyDataSetChanged();
                     break;
@@ -139,6 +140,8 @@ public class ProfileFragment extends Fragment {
                 case ProfileListViewEdits.MY_SELLING_ITEMS_ID: //TODO: Design and show My Selling Items activity.
                     break;
                 case ProfileListViewEdits.UPLOAD_ITEM_ID:
+                    Intent uploadItemIntent = new Intent(requireActivity(), UploadItemActivity.class);
+                    uploadItemResultLauncher.launch(uploadItemIntent);
                     break;
             }
         });
