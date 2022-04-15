@@ -43,7 +43,7 @@ import java.util.ArrayList;
 
 /**
  * Notes:
- *  1.Profile picture's round bc its parent cardview's conerRadius is set to 100dp.
+ *  1.Profile picture's round bc its parent cardview's cornerRadius is set to 100dp.
  */
 public class ProfileFragment extends Fragment {
     private Application application;
@@ -138,6 +138,8 @@ public class ProfileFragment extends Fragment {
                     break;
                 case ProfileListViewEdits.MY_SELLING_ITEMS_ID: //TODO: Design and show My Selling Items activity.
                     break;
+                case ProfileListViewEdits.UPLOAD_ITEM_ID:
+                    break;
             }
         });
     }
@@ -165,6 +167,7 @@ public class ProfileFragment extends Fragment {
         public final static int LOGOUT_ID = 3;
         public final static int BACK_ID = 4;
         public final static int MY_SELLING_ITEMS_ID = 5;
+        public final static int UPLOAD_ITEM_ID = 6;
     }
 
     private void setLoginBtnLoginOnClick() {
@@ -217,6 +220,18 @@ public class ProfileFragment extends Fragment {
     private boolean isUserLoggedIn() {
         return !(usernameAfterLoggedIn.equals(USER_NOT_LOGIN_NAME)) && userIDAfterLoggedIn != USER_NOT_LOGIN_ID;
     }
+
+    private final ActivityResultLauncher<Intent> uploadItemResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        Log.d("TAG", "Upload Item Result.");
+                    }
+                }
+            }
+    );
 
     private final ActivityResultLauncher<Intent> selectProfileImgResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
