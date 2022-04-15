@@ -64,6 +64,8 @@ public class ProfileFragment extends Fragment {
     private CustomListAdapter customListAdapter;
     private ArrayList<CustomRow> listViewOptions;
 
+    ProfileListViewEdits profileListViewEdits;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -101,47 +103,68 @@ public class ProfileFragment extends Fragment {
     private void setProfileListViewOptions() {
         listViewOptions = new ArrayList<>();
         customListAdapter = new CustomListAdapter(requireActivity().getApplicationContext(), 0, listViewOptions);
+
+        profileListViewEdits = new ProfileListViewEdits(customListAdapter, listViewOptions);
+
         profileOptionsListView.setAdapter(customListAdapter);
-        setMainListViewOptions();
+        profileListViewEdits.setMainListViewOptions();
         profileOptionsListView.setOnItemClickListener((parent, view1, position, id) -> {
             switch (listViewOptions.get(position).getId()) {
-                case 0: //Settings
+                case ProfileListViewEdits.SETTINGS_ID: //Settings
                     //TODO: Show Settings list.(Current confirmed options: logout.)
                     Log.d("ProfileOptionsListViewClick", "Settings clicked!");
                     listViewOptions.clear();
                     if (isUserLoggedIn()) {
-                        listViewOptions.add(new CustomRow(3, "Logout", R.drawable.ic_exit_foreground));
+                        listViewOptions.add(new CustomRow(ProfileListViewEdits.LOGOUT_ID, "Logout", R.drawable.ic_exit_foreground));
                     }
-                    listViewOptions.add(new CustomRow(4, "Back", R.drawable.ic_arrow_back_foreground));
+                    listViewOptions.add(new CustomRow(ProfileListViewEdits.BACK_ID, "Back", R.drawable.ic_arrow_back_foreground));
                     customListAdapter.notifyDataSetChanged();
                     break;
-                case 1:
+                case ProfileListViewEdits.MY_ORDERS_ID:
                     //TODO: Show MyOrders activity.
                     break;
-                case 2:
-                    //TODO: Show OnMyShelf activity.
+                case ProfileListViewEdits.ON_MY_SHELF_ID:
                     listViewOptions.clear();
-                    listViewOptions.add(new CustomRow(5, "My Selling Items", R.drawable.ic_money_foreground));
-                    listViewOptions.add(new CustomRow(4, "Back", R.drawable.ic_arrow_back_foreground));
+                    listViewOptions.add(new CustomRow(ProfileListViewEdits.MY_SELLING_ITEMS_ID, "My Selling Items", R.drawable.ic_money_foreground));
+                    listViewOptions.add(new CustomRow(ProfileListViewEdits.BACK_ID, "Back", R.drawable.ic_arrow_back_foreground));
                     customListAdapter.notifyDataSetChanged();
                     break;
-                case 3: //Logout button, only appears when "Settings" clicked.
-                    setMainListViewOptions();
+                case ProfileListViewEdits.LOGOUT_ID: //Logout button, only appears when "Settings" clicked.
+                    profileListViewEdits.setMainListViewOptions();
                     removeUserDetailsForLogout();
                     break;
-                case 4: //Back button, appears when "Settings" clicked.
-                    setMainListViewOptions();
+                case ProfileListViewEdits.BACK_ID: //Back button, appears when "Settings" clicked.
+                    profileListViewEdits.setMainListViewOptions();
+                    break;
+                case ProfileListViewEdits.MY_SELLING_ITEMS_ID: //TODO: Design and show My Selling Items activity.
                     break;
             }
         });
     }
 
-    private void setMainListViewOptions() {
-        listViewOptions.clear();
-        listViewOptions.add(new CustomRow(0, "Settings", R.drawable.settings));
-        listViewOptions.add(new CustomRow(1, "My Orders", R.drawable.shopping_bag));
-        listViewOptions.add(new CustomRow(2, "On my Shelf", R.drawable.shelf));
-        customListAdapter.notifyDataSetChanged();
+    private static class ProfileListViewEdits {
+        private final CustomListAdapter customListAdapter;
+        private final ArrayList<CustomRow> listViewOptions;
+
+        public ProfileListViewEdits(CustomListAdapter customListAdapter, ArrayList<CustomRow> listViewOptions) {
+            this.customListAdapter = customListAdapter;
+            this.listViewOptions = listViewOptions;
+        }
+        public void setMainListViewOptions() {
+            listViewOptions.clear();
+            listViewOptions.add(new CustomRow(SETTINGS_ID, "Settings", R.drawable.settings));
+            listViewOptions.add(new CustomRow(MY_ORDERS_ID, "My Orders", R.drawable.shopping_bag));
+            listViewOptions.add(new CustomRow(ON_MY_SHELF_ID, "On my Shelf", R.drawable.shelf));
+            customListAdapter.notifyDataSetChanged();
+        }
+
+        //IDs for listview item id.
+        public final static int SETTINGS_ID = 0;
+        public final static int MY_ORDERS_ID = 1;
+        public final static int ON_MY_SHELF_ID = 2;
+        public final static int LOGOUT_ID = 3;
+        public final static int BACK_ID = 4;
+        public final static int MY_SELLING_ITEMS_ID = 5;
     }
 
     private void setLoginBtnLoginOnClick() {
