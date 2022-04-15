@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView4"
+            android:id="@+id/profile_card_view"
             android:layout_width="413dp"
             android:layout_height="122dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
 
                     <Button
                         android:id="@+id/login_btn"
-                        android:layout_width="172dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Login" />
@@ -69,7 +69,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_card_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

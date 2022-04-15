@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,9 @@ public class ProfileFragment extends Fragment {
     private ImageView profilePicImgV;
     private Button loginBtn;
     private ListView profileOptionsListView;
+
+//    private Button loginBtnBackup;
+    private TextView showUsernameTextView; //This only gets value assigned when logged in.
 
     private static boolean loggedIn = false;
     private static Bitmap profilePicAfterLoggedIn;
@@ -133,6 +137,7 @@ public class ProfileFragment extends Fragment {
                 case ProfileListViewEdits.LOGOUT_ID: //Logout button, only appears when "Settings" clicked.
                     profileListViewEdits.setMainListViewOptions();
                     removeUserDetailsForLogout();
+                    deleteUserName_showLoginBtn();
                     break;
                 case ProfileListViewEdits.BACK_ID: //Back button, appears when "Settings" clicked.
                     profileListViewEdits.setMainListViewOptions();
@@ -197,22 +202,40 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    private void deleteUserName_showLoginBtn() {
+        ViewGroup profileViewGroup = (ViewGroup) showUsernameTextView.getParent();
+        if (profileViewGroup != null) {
+            profileViewGroup.removeView(showUsernameTextView);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.gravity = Gravity.CENTER_HORIZONTAL;
+            loginBtn.setLayoutParams(params);
+            profileViewGroup.addView(loginBtn);
+        }
+    }
+
     private void deleteLoginBtn_showUsername() {
         //Delete button after logged in. Tutorial reference: https://stackoverflow.com/questions/3995215/add-and-remove-views-in-android-dynamically
         ViewGroup parent = (ViewGroup) loginBtn.getParent();
         if (parent != null) {
             parent.removeView(loginBtn);
-            TextView showUser = new TextView(getActivity());
-            showUser.setText(usernameAfterLoggedIn);
+            showUsernameTextView = new TextView(getActivity());
+            showUsernameTextView.setText(usernameAfterLoggedIn);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
             params.setMargins(64, 0, 0, 0);
-            showUser.setLayoutParams(params);
-            showUser.setTextSize(20);
-            parent.addView(showUser);
+            showUsernameTextView.setLayoutParams(params);
+            showUsernameTextView.setTextSize(20);
+            parent.addView(showUsernameTextView);
         }
+    }
+
+    private void setImageProfilePicView(Uri image) {
+
     }
 
     private void removeUserDetailsForLogout() {
