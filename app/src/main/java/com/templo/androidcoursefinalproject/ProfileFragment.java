@@ -53,7 +53,6 @@ public class ProfileFragment extends Fragment {
     private Button loginBtn;
     private ListView profileOptionsListView;
 
-//    private Button loginBtnBackup;
     private TextView showUsernameTextView; //This only gets value assigned when logged in.
 
     private static boolean loggedIn = false;
@@ -118,7 +117,7 @@ public class ProfileFragment extends Fragment {
                     //TODO: Show Settings list.(Current confirmed options: logout.)
                     Log.d("ProfileOptionsListViewClick", "Settings clicked!");
                     listViewOptions.clear();
-                    if (isUserLoggedIn()) {
+                    if (loggedIn) {
                         listViewOptions.add(new CustomRow(ProfileListViewEdits.LOGOUT_ID, "Logout", R.drawable.ic_exit_foreground));
                     }
                     listViewOptions.add(new CustomRow(ProfileListViewEdits.BACK_ID, "Back", R.drawable.ic_arrow_back_foreground));
@@ -138,6 +137,8 @@ public class ProfileFragment extends Fragment {
                     profileListViewEdits.setMainListViewOptions();
                     removeUserDetailsForLogout();
                     deleteUserName_showLoginBtn();
+                    clearImageProfilePicView();
+                    loggedIn = false;
                     break;
                 case ProfileListViewEdits.BACK_ID: //Back button, appears when "Settings" clicked.
                     profileListViewEdits.setMainListViewOptions();
@@ -234,17 +235,31 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    private void setImageProfilePicView(Uri image) {
+    private void clearImageProfilePicView() {
+        profilePicImgV.setImageResource(R.mipmap.ic_launcher); //Clear image back to default.
+        profilePicAfterLoggedIn = null;
+    }
 
+    private void setImageProfilePicView(Uri image) {
+        profilePicImgV.setImageURI(image);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try { //Save image to buffer.
+                profilePicAfterLoggedIn = ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireContext().getContentResolver(), image));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                profilePicAfterLoggedIn = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void removeUserDetailsForLogout() {
         usernameAfterLoggedIn = USER_NOT_LOGIN_NAME;
         userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
-    }
-
-    private boolean isUserLoggedIn() {
-        return !(usernameAfterLoggedIn.equals(USER_NOT_LOGIN_NAME)) && userIDAfterLoggedIn != USER_NOT_LOGIN_ID;
     }
 
     private final ActivityResultLauncher<Intent> uploadItemResultLauncher = registerForActivityResult(
@@ -266,6 +281,7 @@ public class ProfileFragment extends Fragment {
                     Intent data = result.getData();
                     if (data != null) {
                         Uri selectedImg = data.getData();
+                        setImageProfilePicView(selectedImg);
                         try {
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedImg);
                             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -281,20 +297,6 @@ public class ProfileFragment extends Fragment {
                             });
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }
-                        profilePicImgV.setImageURI(selectedImg);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                            try { //Save image to buffer.
-                                profilePicAfterLoggedIn = ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireContext().getContentResolver(), selectedImg));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            try {
-                                profilePicAfterLoggedIn = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImg);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                         }
                     }
                 }
