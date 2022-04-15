@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCourseFinalProject">
         <activity
+            android:name=".UploadItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginRegisterActivity"
             android:exported="false" />
         <activity

@@ -120,6 +120,9 @@ public class ProfileFragment extends Fragment {
                     break;
                 case 2:
                     //TODO: Show OnMyShelf activity.
+                    listViewOptions.clear();
+                    listViewOptions.add(new CustomRow(5, "My Selling Items", R.drawable.ic_money_foreground));
+                    customListAdapter.notifyDataSetChanged();
                     break;
                 case 3: //Logout button, only appears when "Settings" clicked.
                     setMainListViewOptions();
@@ -169,21 +172,17 @@ public class ProfileFragment extends Fragment {
         ViewGroup parent = (ViewGroup) loginBtn.getParent();
         if (parent != null) {
             parent.removeView(loginBtn);
-            showUserNameLoginBtnDelete(parent);
+            TextView showUser = new TextView(getActivity());
+            showUser.setText(usernameAfterLoggedIn);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(64, 0, 0, 0);
+            showUser.setLayoutParams(params);
+            showUser.setTextSize(20);
+            parent.addView(showUser);
         }
-    }
-
-    private void showUserNameLoginBtnDelete(ViewGroup parent) {
-        TextView showUser = new TextView(getActivity());
-        showUser.setText(usernameAfterLoggedIn);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(64, 0, 0, 0);
-        showUser.setLayoutParams(params);
-        showUser.setTextSize(20);
-        parent.addView(showUser);
     }
 
     private void removeUserDetailsForLogout() {
