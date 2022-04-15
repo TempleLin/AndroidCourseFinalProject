@@ -109,8 +109,7 @@ public class ProfileFragment extends Fragment {
                     //TODO: Show Settings list.(Current confirmed options: logout.)
                     Log.d("ProfileOptionsListViewClick", "Settings clicked!");
                     listViewOptions.clear();
-                    if (!usernameAfterLoggedIn.equals(USER_NOT_LOGIN_NAME) &&
-                            userIDAfterLoggedIn != USER_NOT_LOGIN_ID) {
+                    if (isUserLoggedIn()) {
                         listViewOptions.add(new CustomRow(3, "Logout", R.drawable.ic_exit_foreground));
                     }
                     listViewOptions.add(new CustomRow(4, "Back", R.drawable.ic_arrow_back_foreground));
@@ -124,8 +123,7 @@ public class ProfileFragment extends Fragment {
                     break;
                 case 3: //Logout button, only appears when "Settings" clicked.
                     setMainListViewOptions();
-                    usernameAfterLoggedIn = USER_NOT_LOGIN_NAME;
-                    userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
+                    removeUserDetailsForLogout();
                     break;
                 case 4: //Back button, appears when "Settings" clicked.
                     setMainListViewOptions();
@@ -188,6 +186,15 @@ public class ProfileFragment extends Fragment {
         parent.addView(showUser);
     }
 
+    private void removeUserDetailsForLogout() {
+        usernameAfterLoggedIn = USER_NOT_LOGIN_NAME;
+        userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
+    }
+
+    private boolean isUserLoggedIn() {
+        return !(usernameAfterLoggedIn.equals(USER_NOT_LOGIN_NAME)) && userIDAfterLoggedIn != USER_NOT_LOGIN_ID;
+    }
+
     private final ActivityResultLauncher<Intent> selectProfileImgResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -225,8 +232,6 @@ public class ProfileFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-//                        Bitmap selectedImgBitmap = ImageDecoder.decodeBitmap(selectedImg, )
-//                        profilePicAfterLoggedIn = selectedImg;
                     }
                 }
             });
