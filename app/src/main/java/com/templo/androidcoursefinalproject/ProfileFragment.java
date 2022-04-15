@@ -122,6 +122,7 @@ public class ProfileFragment extends Fragment {
                     //TODO: Show OnMyShelf activity.
                     listViewOptions.clear();
                     listViewOptions.add(new CustomRow(5, "My Selling Items", R.drawable.ic_money_foreground));
+                    listViewOptions.add(new CustomRow(4, "Back", R.drawable.ic_arrow_back_foreground));
                     customListAdapter.notifyDataSetChanged();
                     break;
                 case 3: //Logout button, only appears when "Settings" clicked.
