@@ -109,7 +109,11 @@ public class ProfileFragment extends Fragment {
                     //TODO: Show Settings list.(Current confirmed options: logout.)
                     Log.d("ProfileOptionsListViewClick", "Settings clicked!");
                     listViewOptions.clear();
-                    listViewOptions.add(new CustomRow(3, "Logout", R.drawable.ic_exit_foreground));
+                    if (!usernameAfterLoggedIn.equals(USER_NOT_LOGIN_NAME) &&
+                            userIDAfterLoggedIn != USER_NOT_LOGIN_ID) {
+                        listViewOptions.add(new CustomRow(3, "Logout", R.drawable.ic_exit_foreground));
+                    }
+                    listViewOptions.add(new CustomRow(4, "Back", R.drawable.ic_arrow_back_foreground));
                     customListAdapter.notifyDataSetChanged();
                     break;
                 case 1:
@@ -122,6 +126,9 @@ public class ProfileFragment extends Fragment {
                     setMainListViewOptions();
                     usernameAfterLoggedIn = USER_NOT_LOGIN_NAME;
                     userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
+                    break;
+                case 4: //Back button, appears when "Settings" clicked.
+                    setMainListViewOptions();
                     break;
             }
         });
