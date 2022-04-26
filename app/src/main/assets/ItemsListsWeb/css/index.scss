@@ -7,15 +7,15 @@ body {
   height: 100%;
 }
 .imgsContainer {
-  width: 90%;
-  margin-left: 10%;
+  //width: 90%;
+  margin-left: 2%;
   //Setting position to relative and high z-index can let div show in front of div with lower z-index.
   position: relative;
   z-index: 100;
 }
 img {
   display: inline-block;
-  width: 45%;
+  width: 49%;
   height: 30vh;
   z-index: 1000; //Remember to set z-index of images as well.
   border-radius: 10%;
