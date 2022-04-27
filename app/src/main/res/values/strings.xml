@@ -16,4 +16,7 @@
     <string name="back">Back</string>
     <string name="password_again">Password Again</string>
     <string name="two_password_not_identical">Two Password Inputs are not Identical.</string>
+    <string name="item_name">Item Name:</string>
+    <string name="item_thumbnails">Item Thumbnails:</string>
+    <string name="category">Category:</string>
 </resources>
