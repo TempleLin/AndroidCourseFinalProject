@@ -14,9 +14,6 @@ import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
 /**
- * Plans:
- *  Use WebView to place gallery of images for the shop items.
- *
  * Known Issues:
  *  1.Directories inside the directory for the website to show to WebView shouldn't have
  *      sub-folders with "_" prefix. it will cause loading assets for website generate error.
@@ -33,6 +30,15 @@ import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
  *          2.Last step to setup Controller, use the second answer to this post's question:
  *              https://stackoverflow.com/questions/50577356/android-jetpack-navigation-bottomnavigationview-with-youtube-or-instagram-like
  *  4.tsparticles library used in webview might not work with some lower versions of Android phone.
+ *  5.In order to use AutocompleteSupportFragment for searching location for Google Map fragment, must pay for billing. Therefore, its purpose
+ *    in this profile will be just for demonstration. (It's located under activity_maps_select_loc.xml activity.)
+ *
+ *  Important Features implemented:
+ *  1.ROOM Database. It's controlling SQLite under the hood, to save and use user accounts, and shop items. User's profile thumbnail is also saved.
+ *  2.LocationManager. It's used in this project for detecting current location of the user.
+ *  3.Google Map API. It's used in this project for showing locations.
+ *  4.Google Places API. It's used in this project for AutocompleteSupportFragment which let's user search for addresses. But as stated above, it
+ *    requires billing. So it's just for demonstration purpose.
  */
 public class MainActivity extends AppCompatActivity {
 
