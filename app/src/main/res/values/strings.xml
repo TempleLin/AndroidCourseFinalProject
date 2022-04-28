@@ -19,4 +19,9 @@
     <string name="item_name">Item Name:</string>
     <string name="item_thumbnails">Item Thumbnails:</string>
     <string name="category">Category:</string>
+    <string name="trade_location">Trade Location:</string>
+    <string name="location_not_set">Location not Set</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="name">Name</string>
+    <string name="upload">Upload</string>
 </resources>
