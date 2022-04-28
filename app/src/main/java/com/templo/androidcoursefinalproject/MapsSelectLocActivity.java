@@ -6,12 +6,16 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,9 +31,13 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.templo.androidcoursefinalproject.databinding.ActivityMapsSelectLocBinding;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsSelectLocActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -50,7 +58,9 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
         binding = ActivityMapsSelectLocBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         //Set-up location manager for retrieving current location in GPS.
+        //(Location Manager instantiated must be before requestPermission(). Otherwise, there'll be null object reference function call error.)
         setupLocationManager();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -60,6 +70,26 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
 
         //Set-up auto complete searchbar for location in Google Map.
         setupPlacesAutoCompleteSupportFragment();
+
+        binding.confirmLocFAB.setOnClickListener(v -> {
+            if (mMap != null && currentLocation != null) { //If map is ready and current location is set.
+                Geocoder geocoder;
+                List<Address> addresses;
+                geocoder = new Geocoder(this, Locale.getDefault());
+                try {
+                    addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);  // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    String theAddress = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    Intent intent = getIntent();
+                    intent.putExtra("Address", theAddress);
+                    Log.d("AddressReceived", theAddress);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } catch (IOException e) {
+                    Log.d("AddressReceived", "FAILED");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -75,10 +105,6 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
-        if (currentLocation != null) {
-            updateMapMarkerToCurrentLoc();
-        }
     }
 
     @Override
@@ -87,9 +113,17 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                if (locationManager != null)
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        locationManager.removeUpdates(locationListener); //Must stop or it will keep going after activity finishes.
+        locationManager = null;
     }
 
     private void setupLocationManager() {

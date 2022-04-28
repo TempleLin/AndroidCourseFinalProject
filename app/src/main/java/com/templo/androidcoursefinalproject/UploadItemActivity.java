@@ -12,18 +12,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UploadItemActivity extends AppCompatActivity {
 
     private Button chooseLocationBtn;
+    private TextView itemLocShowTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_item);
 
+        itemLocShowTV = findViewById(R.id.itemLocShowTV);
         chooseLocationBtn = findViewById(R.id.itemChooseLocBtn);
+
         chooseLocationBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapsSelectLocActivity.class);
             activityResultLauncher.launch(intent);
@@ -32,14 +36,13 @@ public class UploadItemActivity extends AppCompatActivity {
 
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Intent data = result.getData();
-                        if (data != null) {
-                        }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        String address = data.getStringExtra("Address");
+                        Log.d("ADDRESS", address);
+                        itemLocShowTV.setText(address);
                     }
                 }
             });

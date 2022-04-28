@@ -39,6 +39,7 @@ import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
  *  3.Google Map API. It's used in this project for showing locations.
  *  4.Google Places API. It's used in this project for AutocompleteSupportFragment which let's user search for addresses. But as stated above, it
  *    requires billing. So it's just for demonstration purpose.
+ *  5.Geocoder. To convert longitude and latitude to address.
  */
 public class MainActivity extends AppCompatActivity {
 
