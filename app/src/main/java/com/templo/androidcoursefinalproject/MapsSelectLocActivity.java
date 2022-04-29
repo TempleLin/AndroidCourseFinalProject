@@ -73,15 +73,16 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
 
         binding.confirmLocFAB.setOnClickListener(v -> {
             if (mMap != null && currentLocation != null) { //If map is ready and current location is set.
-                Geocoder geocoder;
-                List<Address> addresses;
-                geocoder = new Geocoder(this, Locale.getDefault());
                 try {
-                    addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);  // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                    String theAddress = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    List<Address> addresses = getAddressesInItsLocaleLanguage();
+                    Address address = addresses.get(0);
                     Intent intent = getIntent();
-                    intent.putExtra("Address", theAddress);
-                    Log.d("AddressReceived", theAddress);
+                    intent.putExtra("Address", address.getAddressLine(0));
+                    intent.putExtra("FeatureName", address.getFeatureName());
+                    intent.putExtra("City", address.getLocality());
+                    Log.d("Address", address.getAddressLine(0));
+                    Log.d("FeatureName", address.getFeatureName());
+                    Log.d("City", address.getLocality());
                     setResult(RESULT_OK, intent);
                     finish();
                 } catch (IOException e) {
@@ -192,5 +193,34 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
         Marker marker = mMap.addMarker(new MarkerOptions().position(currentLatLng).title("Current Location"));
         marker.showInfoWindow();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, MAP_MARKER_ZOOM));
+    }
+
+    //Link to tutorial: https://stackoverflow.com/questions/31077014/how-to-get-geocoder-s-results-on-the-latlng-s-country-language
+    private List<Address> getAddressesInItsLocaleLanguage() throws IOException {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
+        Address address = addresses.get(0);
+        String countryCode = address.getCountryCode();
+        String langCode = null;
+
+        Locale[] locales = Locale.getAvailableLocales();
+        for (Locale localeIn : locales) {
+            if (countryCode.equalsIgnoreCase(localeIn.getCountry())) {
+                langCode = localeIn.getLanguage();
+                break;
+            }
+        }
+        Locale locale = new Locale(langCode, countryCode);
+        geocoder = new Geocoder(this, locale);
+        try {
+            addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
+//            Log.d("Address", addresses.get(0).getAddressLine(0));
+        }
+        catch (IOException | IndexOutOfBoundsException | NullPointerException ex) {
+            addresses = null;
+        }
+        return addresses;
     }
 }

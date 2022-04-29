@@ -37,13 +37,20 @@ public class UploadItemActivity extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
+                Log.d("ADDRESS", "MapsSelectLocActivity end.");
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     if (data != null) {
                         String address = data.getStringExtra("Address");
+                        String featureName = data.getStringExtra("FeatureName");
+                        String city = data.getStringExtra("City");
                         Log.d("ADDRESS", address);
-                        itemLocShowTV.setText(address);
+                        Log.d("ADDRESS", featureName);
+                        Log.d("ADDRESS", city);
+                        itemLocShowTV.setText(city);
                     }
+                } else {
+                    Log.d("ADDRESS", "MapsSelectLocActivity failed.");
                 }
             });
 }
