@@ -43,11 +43,21 @@ public class UploadItemActivity extends AppCompatActivity {
                     if (data != null) {
                         String address = data.getStringExtra("Address");
                         String featureName = data.getStringExtra("FeatureName");
-                        String city = data.getStringExtra("City");
+                        String locality = data.getStringExtra("Locality");
+                        String state = data.getStringExtra("State");
+                        String subAdmin = data.getStringExtra("SubAdmin");
                         Log.d("ADDRESS", address);
                         Log.d("ADDRESS", featureName);
-                        Log.d("ADDRESS", city);
-                        itemLocShowTV.setText(city);
+                        Log.d("ADDRESS", locality);
+                        if (state != null) Log.d("ADDRESS", state);
+                        if (subAdmin != null) Log.d("ADDRESS", subAdmin);
+
+                        StringBuilder locResultBuilder = new StringBuilder();
+                        if (state != null) locResultBuilder.append(state);
+                        if (subAdmin != null) locResultBuilder.append(subAdmin);
+                        if (locality != null) locResultBuilder.append(locality);
+
+                        itemLocShowTV.setText(locResultBuilder.toString());
                     }
                 } else {
                     Log.d("ADDRESS", "MapsSelectLocActivity failed.");

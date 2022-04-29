@@ -79,10 +79,11 @@ public class MapsSelectLocActivity extends FragmentActivity implements OnMapRead
                     Intent intent = getIntent();
                     intent.putExtra("Address", address.getAddressLine(0));
                     intent.putExtra("FeatureName", address.getFeatureName());
-                    intent.putExtra("City", address.getLocality());
-                    Log.d("Address", address.getAddressLine(0));
-                    Log.d("FeatureName", address.getFeatureName());
-                    Log.d("City", address.getLocality());
+                    intent.putExtra("Locality", address.getLocality());
+                    String state = address.getAdminArea();
+                    String subAdmin = address.getSubAdminArea(); //This is equivalent to "City" or "County" in Taiwan.
+                    if (state != null) intent.putExtra("State", state);
+                    if (subAdmin != null) intent.putExtra("SubAdmin", subAdmin);
                     setResult(RESULT_OK, intent);
                     finish();
                 } catch (IOException e) {
