@@ -95,8 +95,8 @@ public class RegisterFragment extends Fragment {
                 UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
                         .create(UserViewModel.class);
 
-                ProductViewModel.insert(application, new Product("First Product", null, null, null, null, null,
-                        0, "Taiwan", "This is the first product for testing."));
+//                ProductViewModel.insert(application, new Product("First Product", null, null, null, null, null,
+//                        0, "Taiwan", "This is the first product for testing."));
 
                 userViewModel.userExists(application, regEmailVal, regPasswordVal).observe((LifecycleOwner) activity, exists -> {
                     if (exists) {
