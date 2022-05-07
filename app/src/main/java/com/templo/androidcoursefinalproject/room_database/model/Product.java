@@ -6,45 +6,61 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 
 //Entity mapping to the actual table in database.
 @Entity(tableName = "product_table", foreignKeys = {
         //Set "sellerUserID" as foreign key from user_table.
         @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "sellerUserID", onDelete = ForeignKey.CASCADE)
 })
+@ToString
 public class Product {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
+    @Getter@Setter
     private int id; //Primary key id column of the table.
 
     @ColumnInfo(name = "productName")
+    @Getter@Setter
     private String productName;
 
     @ColumnInfo(name = "sellerUserID")
+    @Getter@Setter
     private String sellerUserID;
 
     @ColumnInfo(name = "image1")
+    @Getter@Setter
     private String image1;
 
     @ColumnInfo(name = "image2")
+    @Getter@Setter
     private String image2;
 
     @ColumnInfo(name = "image3")
+    @Getter@Setter
     private String image3;
 
     @ColumnInfo(name = "image4")
+    @Getter@Setter
     private String image4;
 
     @ColumnInfo(name = "image5")
+    @Getter@Setter
     private String image5;
 
     @ColumnInfo(name = "category")
+    @Getter@Setter
     private int category; //Foreign key to category table.
 
     @ColumnInfo(name = "location")
+    @Getter@Setter
     private String location;
 
     @ColumnInfo(name = "description")
+    @Getter@Setter
     private String description;
 
     public Product(int id, String productName, String sellerUserID, String image1, String image2, String image3, String image4,
@@ -59,94 +75,6 @@ public class Product {
         this.image5 = image5;
         this.category = category;
         this.location = location;
-        this.description = description;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getSellerUserID() {
-        return sellerUserID;
-    }
-
-    public void setSellerUserID(String sellerUserID) {
-        this.sellerUserID = sellerUserID;
-    }
-
-    public String getImage1() {
-        return image1;
-    }
-
-    public void setImage1(String image1) {
-        this.image1 = image1;
-    }
-
-    public String getImage2() {
-        return image2;
-    }
-
-    public void setImage2(String image2) {
-        this.image2 = image2;
-    }
-
-    public String getImage3() {
-        return image3;
-    }
-
-    public void setImage3(String image3) {
-        this.image3 = image3;
-    }
-
-    public String getImage4() {
-        return image4;
-    }
-
-    public void setImage4(String image4) {
-        this.image4 = image4;
-    }
-
-    public String getImage5() {
-        return image5;
-    }
-
-    public void setImage5(String image5) {
-        this.image5 = image5;
-    }
-
-    public int getCategory() {
-        return category;
-    }
-
-    public void setCategory(int category) {
-        this.category = category;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 }
