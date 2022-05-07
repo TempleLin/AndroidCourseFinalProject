@@ -14,7 +14,8 @@ import lombok.ToString;
 //Entity mapping to the actual table in database.
 @Entity(tableName = "product_table", foreignKeys = {
         //Set "sellerUserID" as foreign key from user_table.
-        @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "sellerUserID", onDelete = ForeignKey.CASCADE)
+        @ForeignKey(entity = User.class, parentColumns = "id", childColumns = "sellerUserID", onDelete = ForeignKey.CASCADE),
+        @ForeignKey(entity = Category.class, parentColumns = "id", childColumns = "category", onDelete = ForeignKey.CASCADE)
 })
 @ToString
 public class Product {
