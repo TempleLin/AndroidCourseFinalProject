@@ -125,8 +125,16 @@ public class ProfileFragment extends Fragment {
                     break;
                 case ProfileListViewEdits.MY_ORDERS_ID:
                     //TODO: Show MyOrders activity.
+                    if (!loggedIn) {
+                        showNotLoginToast();
+                        return;
+                    }
                     break;
                 case ProfileListViewEdits.ON_MY_SHELF_ID:
+                    if (!loggedIn) {
+                        showNotLoginToast();
+                        return;
+                    }
                     listViewOptions.clear();
                     listViewOptions.add(new CustomRow(ProfileListViewEdits.MY_SELLING_ITEMS_ID, "My Selling Items", R.drawable.ic_money_foreground));
                     listViewOptions.add(new CustomRow(ProfileListViewEdits.UPLOAD_ITEM_ID, "Upload an Item", R.drawable.ic_upload_foreground));
@@ -179,10 +187,15 @@ public class ProfileFragment extends Fragment {
         public final static int UPLOAD_ITEM_ID = 6;
     }
 
+    private void showNotLoginToast() {
+        Toast.makeText(requireActivity(), "Not logged in!", Toast.LENGTH_SHORT).show();
+    }
+
     private void setLoginBtnLoginOnClick() {
         if (loggedIn) {
             deleteLoginBtn_showUsername();
-            profilePicImgV.setImageBitmap(profilePicAfterLoggedIn);
+            if (profilePicAfterLoggedIn != null)
+                profilePicImgV.setImageBitmap(profilePicAfterLoggedIn);
             return;
         }
         loginBtn.setOnClickListener(v -> {
@@ -314,10 +327,13 @@ public class ProfileFragment extends Fragment {
                             deleteLoginBtn_showUsername();
 
                             //Set profile pic.
-                            byte[] encodeByte = Base64.decode(data.getStringExtra("ProfilePic"), Base64.DEFAULT);
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-                            profilePicImgV.setImageBitmap(bitmap);
-                            profilePicAfterLoggedIn = bitmap;
+                            String profilePicStr = data.getStringExtra("ProfilePic");
+                            if (profilePicStr != null) {
+                                byte[] encodeByte = Base64.decode(data.getStringExtra("ProfilePic"), Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                                profilePicImgV.setImageBitmap(bitmap);
+                                profilePicAfterLoggedIn = bitmap;
+                            }
                         } else {
                             Toast.makeText(getActivity(), "Something Went Wrong!", Toast.LENGTH_SHORT).show();
                         }
