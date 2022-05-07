@@ -1,29 +1,34 @@
 * {
   padding: 0px;
-  margin: 0px;
+  margin: 1px 0px 0px;
 }
 
-body {
-  width: 100%;
-  height: 100%;
+div#main {
+  margin-left: calc(2% - 4px);
 }
 
-.imgsContainer {
-  margin-left: 2%;
-  position: relative;
-  z-index: 100;
-}
-
-img {
-  display: inline-block;
+div.gallery {
+  border: 1px solid #ccc;
+  float: left;
   width: 49%;
-  height: 30vh;
-  z-index: 1000;
-  border-radius: 10%;
 }
 
-#tsparticles {
-  z-index: 0;
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  border-radius: 5%;
+  width: 98%;
+  height: 30vh;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+div.desc {
+  padding-bottom: 15px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=index.css.map */
