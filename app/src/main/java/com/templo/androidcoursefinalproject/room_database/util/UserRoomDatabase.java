@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 //First arg: array of Entities. Second arg: Version to give to the database. Third arg: Whether or not to export schema file.
-@Database(entities = {User.class, Product.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Product.class}, version = 3, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
 
     //The singleton instance.
