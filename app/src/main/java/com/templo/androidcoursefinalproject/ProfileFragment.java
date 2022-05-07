@@ -328,6 +328,7 @@ public class ProfileFragment extends Fragment {
 
                             //Set profile pic.
                             String profilePicStr = data.getStringExtra("ProfilePic");
+                            //The account might not have profile pic; must check if it has value before use.
                             if (profilePicStr != null) {
                                 byte[] encodeByte = Base64.decode(data.getStringExtra("ProfilePic"), Base64.DEFAULT);
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
