@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.templo.androidcoursefinalproject.room_database.data.UserRepository;
 
@@ -25,12 +26,18 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<User>> getAllUsers() { return allUsers; }
-    public static void insert(User user) { repository.insert(user); }
-    public static void insertOnlyOne(Application application, User user) { //User must be unique.
-        if (repository.getUser(application, user.getEmail(), user.getName(), user.getPassword()) != null) {
-            repository.insert(user);
+    public static void insert(Application application, User user) {
+        if (repository == null) {
+            new ViewModelProvider.AndroidViewModelFactory(application)
+                    .create(UserViewModel.class);
         }
+        repository.insert(user);
     }
+//    public static void insertOnlyOne(Application application, User user) { //User must be unique.
+//        if (repository.getUser(application, user.getEmail(), user.getName(), user.getPassword()) != null) {
+//            repository.insert(user);
+//        }
+//    }
     public LiveData<User> getUser(Application application, String email, String name, String password) {
         return repository.getUser(application, email, name, password);
     }

@@ -6,7 +6,6 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.templo.androidcoursefinalproject.room_database.model.Product;
-import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.util.TheDatabase;
 
 import java.util.List;

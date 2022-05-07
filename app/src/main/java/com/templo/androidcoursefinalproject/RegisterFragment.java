@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.templo.androidcoursefinalproject.room_database.model.Product;
+import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
 import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
@@ -93,11 +95,14 @@ public class RegisterFragment extends Fragment {
                 UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
                         .create(UserViewModel.class);
 
+                ProductViewModel.insert(application, new Product("First Product", null, null, null, null, null,
+                        0, "Taiwan", "This is the first product for testing."));
+
                 userViewModel.userExists(application, regEmailVal, regPasswordVal).observe((LifecycleOwner) activity, exists -> {
                     if (exists) {
                         registerResultTextView.setText(application.getString(R.string.user_already_exists));
                     } else {
-                        UserViewModel.insertOnlyOne(application, new User(regUserNameVal, regEmailVal, regPasswordVal, null));
+                        UserViewModel.insert(application, new User(regUserNameVal, regEmailVal, regPasswordVal, null));
                         registerResultTextView.setText("");
                         ((LoginRegisterActivity)activity).switchBetweenRegisterAndLoginFragment();
                     }

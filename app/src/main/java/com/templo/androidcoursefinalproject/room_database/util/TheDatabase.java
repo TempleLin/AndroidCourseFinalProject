@@ -1,6 +1,7 @@
 package com.templo.androidcoursefinalproject.room_database.util;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -60,15 +61,10 @@ public abstract class TheDatabase extends RoomDatabase {
                 .execute(): Executes the given command at some time in the future. The command may execute in a new thread, in a pooled thread,
                     or in the calling thread, at the discretion of the Executor implementation.
                  */
+                Log.d("ROOM", "Test ROOM database build callback.");
                 databaseWriteExecutor.execute(() -> {
                     //ROOM communication with database must be used in the background thread,
                     //  that's why it's in .execute callback.
-
-//                    UserDao userDao = INSTANCE.contactDao();
-//                    userDao.deleteAll();
-//
-//                    userDao.insert(new User("John", "Teacher@testmail.com", "5678"));
-//                    userDao.insert(new User("Rock", "Actor@testmail.com", "1234"));
                 });
             }
         };
