@@ -42,6 +42,10 @@ public class ProductViewModel extends AndroidViewModel {
         return repository.getProduct(application, productName, category, location);
     }
 
+    public LiveData<Product> getProduct(Application application, int id) {
+        return repository.getProduct(application, id);
+    }
+
     public LiveData<Boolean> productExists(Application application, String productName, int category, String location) {
         return repository.productExists(application, productName,category, location);
     }

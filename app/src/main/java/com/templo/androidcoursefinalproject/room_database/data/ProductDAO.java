@@ -25,6 +25,9 @@ public interface ProductDAO {
             "AND location=:location")
     LiveData<Product> getProduct(String productName, int category, String location);
 
+    @Query("SELECT * FROM product_table WHERE id=:id")
+    LiveData<Product> getProduct(int id);
+
     @Query("SELECT EXISTS(SELECT * FROM product_table WHERE productName=:productName AND category=:category)")
     LiveData<Boolean> productExists(String productName, int category);
 }

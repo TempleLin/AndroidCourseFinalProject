@@ -36,6 +36,11 @@ public class ProductRepository {
         return db.productDAO().getProduct(productName, category, location);
     }
 
+    public LiveData<Product> getProduct(Application application, int id) {
+        TheDatabase db = TheDatabase.getDatabase(application);
+        return db.productDAO().getProduct(id);
+    }
+
     public LiveData<Boolean> productExists(Application application, String productName, int category, String location) {
         TheDatabase db = TheDatabase.getDatabase(application);
         return db.productDAO().productExists(productName, category);
