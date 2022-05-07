@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
 
         homeFragWV = requireView().findViewById(R.id.home_frag_webview);
         WebSettings webSettings = homeFragWV.getSettings();
-        webSettings.setBuiltInZoomControls(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(false); //Remove zooming magnifiers buttons.
 //        webSettings.setDomStorageEnabled(true);
