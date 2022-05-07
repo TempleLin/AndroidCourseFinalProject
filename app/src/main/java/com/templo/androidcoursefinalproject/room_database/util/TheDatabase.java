@@ -18,10 +18,10 @@ import java.util.concurrent.Executors;
 
 //First arg: array of Entities. Second arg: Version to give to the database. Third arg: Whether or not to export schema file.
 @Database(entities = {User.class, Product.class}, version = 3, exportSchema = false)
-public abstract class UserRoomDatabase extends RoomDatabase {
+public abstract class TheDatabase extends RoomDatabase {
 
     //The singleton instance.
-    private static volatile UserRoomDatabase INSTANCE;
+    private static volatile TheDatabase INSTANCE;
 
     //RoomDatabase These abstract methods returning DAO to get to Entities.
     public abstract UserDao userDao();
@@ -33,12 +33,12 @@ public abstract class UserRoomDatabase extends RoomDatabase {
     //Executor service helps write things into database. Its execution run things in the back threads (Not the main thread).
     public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    public static UserRoomDatabase getDatabase(final Context context) {
+    public static TheDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (UserRoomDatabase.class) { //class is passed to synchronized bc method is static.
+            synchronized (TheDatabase.class) { //class is passed to synchronized bc method is static.
                 if (INSTANCE == null) {
                     //"name" parameter is the name the database name.
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), UserRoomDatabase.class, "contact_database")
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), TheDatabase.class, "contact_database")
                             .addCallback(sRoomDatabaseCallback) //Will call this RoomDatabase.Callback object's onCreate method as callback when build is finished.
                             //If you don’t want to provide migrations and you specifically want your database to be cleared when you upgrade the version.
                             //(If this is not added, error will happen if update database version but not set migration path.)

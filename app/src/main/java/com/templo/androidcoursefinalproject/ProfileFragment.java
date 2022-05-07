@@ -24,7 +24,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.templo.androidcoursefinalproject.custom_list.*;
 import com.templo.androidcoursefinalproject.custom_list.CustomRow;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
-import com.templo.androidcoursefinalproject.room_database.util.UserRoomDatabase;
+import com.templo.androidcoursefinalproject.room_database.util.TheDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -305,7 +304,7 @@ public class ProfileFragment extends Fragment {
 
                             UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
                                     .create(UserViewModel.class);
-                            UserRoomDatabase.databaseWriteExecutor.execute(() -> {
+                            TheDatabase.databaseWriteExecutor.execute(() -> {
                                 userViewModel.updateUserProfilePic(application, userIDAfterLoggedIn, imageToString);
                             });
                         } catch (IOException e) {

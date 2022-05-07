@@ -7,7 +7,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.templo.androidcoursefinalproject.room_database.data.UserRepository;
-import com.templo.androidcoursefinalproject.room_database.util.UserRoomDatabase;
 
 import java.util.List;
 
