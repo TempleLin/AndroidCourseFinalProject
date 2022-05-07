@@ -8,14 +8,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.templo.androidcoursefinalproject.room_database.data.ProductDAO;
 import com.templo.androidcoursefinalproject.room_database.data.UserDao;
+import com.templo.androidcoursefinalproject.room_database.model.Product;
 import com.templo.androidcoursefinalproject.room_database.model.User;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 //First arg: array of Entities. Second arg: Version to give to the database. Third arg: Whether or not to export schema file.
-@Database(entities = {User.class}, version = 2, exportSchema = false)
+@Database(entities = {User.class, Product.class}, version = 2, exportSchema = false)
 public abstract class UserRoomDatabase extends RoomDatabase {
 
     //The singleton instance.
@@ -23,6 +25,8 @@ public abstract class UserRoomDatabase extends RoomDatabase {
 
     //RoomDatabase These abstract methods returning DAO to get to Entities.
     public abstract UserDao userDao();
+
+    public abstract ProductDAO productDAO();
 
     public static final int NUMBER_OF_THREADS = 4;
 

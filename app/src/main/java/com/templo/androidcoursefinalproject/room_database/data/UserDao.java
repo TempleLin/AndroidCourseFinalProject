@@ -11,13 +11,12 @@ import com.templo.androidcoursefinalproject.room_database.model.User;
 
 import java.util.List;
 
-//This DAO(Data Access Object) will take care of the CRUD operations in Contact entity.
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE) //Ignore if conflict happens.
     void insert(User user);
 
-    @Query("DELETE FROM user_table") //"contact_table" gets auto-recognized by intellisense.
+    @Query("DELETE FROM user_table") //"user_table" gets auto-recognized by intellisense.
     void deleteAll();
 
     @Query("SELECT * FROM user_table ORDER BY name ASC") //ASC means ascending.
