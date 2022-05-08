@@ -70,6 +70,7 @@ public abstract class TheDatabase extends RoomDatabase {
                 databaseWriteExecutor.execute(() -> {
                     //ROOM communication with database must be used in the background thread,
                     //  that's why it's in .execute callback.
+
                 });
             }
         };

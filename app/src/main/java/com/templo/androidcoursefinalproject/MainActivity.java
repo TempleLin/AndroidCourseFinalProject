@@ -6,17 +6,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.templo.androidcoursefinalproject.room_database.model.Category;
 import com.templo.androidcoursefinalproject.room_database.model.CategoryViewModel;
-import com.templo.androidcoursefinalproject.room_database.model.Product;
-import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
-import com.templo.androidcoursefinalproject.room_database.model.RelationalViewModel;
-import com.templo.androidcoursefinalproject.room_database.model.User;
-import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
+import com.templo.androidcoursefinalproject.room_database.util.TheDatabase;
 
 /**
  * Known Issues:
@@ -62,22 +56,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startupROOMDatabase() {
-        //Remember to instantiate this ViewModel object like this before calling its class's static methods.
-        //  (ex. .insert())
-        UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this.getApplication())
-                .create(UserViewModel.class);
+        TheDatabase theDatabase = TheDatabase.getDatabase(getApplicationContext());
 
-        //This callback passed to .observe() gets called when the LiveData gets edited in real time.
-        //  Therefore, the textview updates its text values whenever .insert() adds values to the LiveData.
-        userViewModel.getAllUsers().observe(this, users -> {
-            Log.d("TAG", "Observer called!");
-            StringBuilder toShow = new StringBuilder();
-            for(User user : users) {
-                toShow.append(user.toString());
-            }
-            //This debug.log might not work, but the value is correct.
-            Log.d("ROOM_DATABASE", toShow.toString());
-        });
+        setupCategoriesTableDefaultRecords();
 
 //        ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
 //                .create(ProductViewModel.class);
@@ -112,5 +93,24 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(findViewById(R.id.bottom_navigation_view), user.toString(), Snackbar.LENGTH_SHORT).show();
 //            }
 //        });
+    }
+
+    private void setupCategoriesTableDefaultRecords() {
+        CategoryViewModel categoryViewModel = new ViewModelProvider.AndroidViewModelFactory(MainActivity.this.getApplication())
+                .create(CategoryViewModel.class);
+
+        String[] allDefaultCategories = new String[] {
+            "Furniture", "Outdoor", "Pets", "Video Games"
+        };
+
+        categoryViewModel.getAllCategories().observe(MainActivity.this, all -> {
+            if (all.size() != allDefaultCategories.length) {
+                CategoryViewModel.deleteAll(getApplication());
+                for (String defaultCategory : allDefaultCategories) {
+                    CategoryViewModel.insert(MainActivity.this.getApplication(),
+                            new Category(defaultCategory));
+                }
+            }
+        });
     }
 }
