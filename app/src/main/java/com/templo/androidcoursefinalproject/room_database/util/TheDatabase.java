@@ -11,6 +11,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.templo.androidcoursefinalproject.room_database.data.CategoryDAO;
 import com.templo.androidcoursefinalproject.room_database.data.ProductDAO;
+import com.templo.androidcoursefinalproject.room_database.data.RelationalDAO;
+import com.templo.androidcoursefinalproject.room_database.data.RelationalRepository;
 import com.templo.androidcoursefinalproject.room_database.data.UserDao;
 import com.templo.androidcoursefinalproject.room_database.model.Category;
 import com.templo.androidcoursefinalproject.room_database.model.Product;
@@ -20,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 //First arg: array of Entities. Second arg: Version to give to the database. Third arg: Whether or not to export schema file.
-@Database(entities = {User.class, Product.class, Category.class}, version = 7, exportSchema = false)
+@Database(entities = {User.class, Product.class, Category.class}, version = 9, exportSchema = false)
 public abstract class TheDatabase extends RoomDatabase {
 
     //The singleton instance.
@@ -30,6 +32,7 @@ public abstract class TheDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract ProductDAO productDAO();
     public abstract CategoryDAO categoryDAO();
+    public abstract RelationalDAO relationalDAO();
 
     public static final int NUMBER_OF_THREADS = 4;
 

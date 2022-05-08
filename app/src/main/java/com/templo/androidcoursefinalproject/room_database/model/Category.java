@@ -19,4 +19,8 @@ public class Category {
     @ColumnInfo(name = "name")
     @Getter@Setter
     private String name;
+
+    public Category(String name) {
+        this.name = name;
+    }
 }

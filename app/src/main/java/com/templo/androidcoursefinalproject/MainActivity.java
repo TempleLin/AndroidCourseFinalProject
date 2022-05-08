@@ -10,6 +10,11 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.templo.androidcoursefinalproject.room_database.model.Category;
+import com.templo.androidcoursefinalproject.room_database.model.CategoryViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.Product;
+import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.RelationalViewModel;
 import com.templo.androidcoursefinalproject.room_database.model.User;
 import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
@@ -73,6 +78,24 @@ public class MainActivity extends AppCompatActivity {
             //This debug.log might not work, but the value is correct.
             Log.d("ROOM_DATABASE", toShow.toString());
         });
+
+        UserViewModel.insert(getApplication(), new User("John", "john1234@gmail.com", "1234", null));
+
+        CategoryViewModel categoryViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+                .create(CategoryViewModel.class);
+        CategoryViewModel.insert(getApplication(), new Category("First"));
+
+        ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+                .create(ProductViewModel.class);
+        ProductViewModel.insert(getApplication(), new Product("Test",
+                1, null, null, null, null, null, 1, "Location", "Description"));
+
+        RelationalViewModel relationalViewModel =  new ViewModelProvider.AndroidViewModelFactory(getApplication())
+                .create(RelationalViewModel.class);
+        relationalViewModel.getAllUsersWithProducts(getApplication()).observe(MainActivity.this, all -> {
+            Log.d("Relational", all.toString());
+        });
+        relationalViewModel.getAllCategoriesWithProducts(getApplication());
 
 //        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
 //            UserRoomDatabase.getDatabase(this).contactDao().deleteAll();

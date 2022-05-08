@@ -30,7 +30,7 @@ public class Product {
 
     @ColumnInfo(name = "sellerUserID")
     @Getter@Setter
-    private String sellerUserID;
+    private int sellerUserID;
 
     @ColumnInfo(name = "image1")
     @Getter@Setter
@@ -64,9 +64,8 @@ public class Product {
     @Getter@Setter
     private String description;
 
-    public Product(int id, String productName, String sellerUserID, String image1, String image2, String image3, String image4,
+    public Product(String productName, int sellerUserID, String image1, String image2, String image3, String image4,
                    String image5, int category, String location, String description) {
-        this.id = id;
         this.productName = productName;
         this.sellerUserID = sellerUserID;
         this.image1 = image1;
