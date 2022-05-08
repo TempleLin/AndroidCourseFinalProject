@@ -49,4 +49,9 @@ public class UserRepository {
         TheDatabase db = TheDatabase.getDatabase(application);
         db.userDao().updateUserProfilePic(id, profile_pic);
     }
+
+    public void deleteAll(Application application) {
+        TheDatabase db = TheDatabase.getDatabase(application);
+        db.userDao().deleteAll();
+    }
 }

@@ -49,4 +49,8 @@ public class ProductViewModel extends AndroidViewModel {
     public LiveData<Boolean> productExists(Application application, String productName, int category, String location) {
         return repository.productExists(application, productName,category, location);
     }
+
+    public static void deleteAll(Application application) {
+        repository.deleteAll(application);
+    }
 }

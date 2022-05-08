@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,11 +34,7 @@ public class UserViewModel extends AndroidViewModel {
         }
         repository.insert(user);
     }
-//    public static void insertOnlyOne(Application application, User user) { //User must be unique.
-//        if (repository.getUser(application, user.getEmail(), user.getName(), user.getPassword()) != null) {
-//            repository.insert(user);
-//        }
-//    }
+
     public LiveData<User> getUser(Application application, String email, String name, String password) {
         return repository.getUser(application, email, name, password);
     }
@@ -52,5 +49,9 @@ public class UserViewModel extends AndroidViewModel {
 
     public void updateUserProfilePic(Application application, int id, String profile_pic) {
         repository.updateUserProfilePic(application, id, profile_pic);
+    }
+
+    public static void deleteAll(Application application) {
+        repository.deleteAll(application);
     }
 }

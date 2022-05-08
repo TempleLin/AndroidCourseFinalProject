@@ -79,23 +79,25 @@ public class MainActivity extends AppCompatActivity {
             Log.d("ROOM_DATABASE", toShow.toString());
         });
 
-        UserViewModel.insert(getApplication(), new User("John", "john1234@gmail.com", "1234", null));
-
-        CategoryViewModel categoryViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
-                .create(CategoryViewModel.class);
-        CategoryViewModel.insert(getApplication(), new Category("First"));
-
-        ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
-                .create(ProductViewModel.class);
-        ProductViewModel.insert(getApplication(), new Product("Test",
-                1, null, null, null, null, null, 1, "Location", "Description"));
-
-        RelationalViewModel relationalViewModel =  new ViewModelProvider.AndroidViewModelFactory(getApplication())
-                .create(RelationalViewModel.class);
-        relationalViewModel.getAllUsersWithProducts(getApplication()).observe(MainActivity.this, all -> {
-            Log.d("Relational", all.toString());
-        });
-        relationalViewModel.getAllCategoriesWithProducts(getApplication());
+//        ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+//                .create(ProductViewModel.class);
+//        //product_table has foreign keys to other tables; ROOM database might do executions in an asynchronous stack approach.
+//        // But, if the foreign key relative to another table's row doesn't exist yet, insertion will fail. Therefore, execute insert to product_table first.
+//        ProductViewModel.insert(getApplication(), new Product("Test",
+//                1, null, null, null, null, null, 1, "Location", "Description"));
+//
+//        UserViewModel.insert(getApplication(), new User("John", "john1234@gmail.com", "1234", null));
+//
+//        CategoryViewModel categoryViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+//                .create(CategoryViewModel.class);
+//        CategoryViewModel.insert(getApplication(), new Category("First"));
+//
+//        RelationalViewModel relationalViewModel =  new ViewModelProvider.AndroidViewModelFactory(getApplication())
+//                .create(RelationalViewModel.class);
+//        relationalViewModel.getAllUsersWithProducts(getApplication()).observe(MainActivity.this, all -> {
+//            Log.d("Relational", all.toString());
+//        });
+//        relationalViewModel.getAllCategoriesWithProducts(getApplication());
 
 //        UserRoomDatabase.databaseWriteExecutor.execute(() -> {
 //            UserRoomDatabase.getDatabase(this).contactDao().deleteAll();

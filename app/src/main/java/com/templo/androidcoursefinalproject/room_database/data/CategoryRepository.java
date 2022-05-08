@@ -36,4 +36,9 @@ public class CategoryRepository {
         TheDatabase db = TheDatabase.getDatabase(application);
         return db.categoryDAO().categoryExists(name);
     }
+
+    public void deleteAll(Application application) {
+        TheDatabase db = TheDatabase.getDatabase(application);
+        db.categoryDAO().deleteAll();
+    }
 }

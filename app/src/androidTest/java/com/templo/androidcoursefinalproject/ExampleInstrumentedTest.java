@@ -1,7 +1,12 @@
 package com.templo.androidcoursefinalproject;
 
+import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -9,6 +14,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+
+import com.templo.androidcoursefinalproject.room_database.model.Category;
+import com.templo.androidcoursefinalproject.room_database.model.CategoryViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.Product;
+import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.RelationalViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.User;
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
 
 /**
  * Instrumented test, which will execute on an Android device.

@@ -45,4 +45,9 @@ public class ProductRepository {
         TheDatabase db = TheDatabase.getDatabase(application);
         return db.productDAO().productExists(productName, category);
     }
+
+    public void deleteAll(Application application) {
+        TheDatabase db = TheDatabase.getDatabase(application);
+        db.productDAO().deleteAll();
+    }
 }

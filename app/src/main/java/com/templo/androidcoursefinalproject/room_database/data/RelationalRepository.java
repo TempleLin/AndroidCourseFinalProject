@@ -18,7 +18,7 @@ public class RelationalRepository {
     @Getter private LiveData<List<UserWithProducts>> allUsersWithProducts;
     @Getter private LiveData<List<CategoryWithProducts>> allCategoriesWithProducts;
 
-    public RelationalRepository(Application application){
+    public RelationalRepository(Application application) {
         TheDatabase db = TheDatabase.getDatabase(application);
         allUsersWithProducts = db.relationalDAO().getAllUsersWithProducts();
         allCategoriesWithProducts = db.relationalDAO().getAllCategoriesWithProducts();

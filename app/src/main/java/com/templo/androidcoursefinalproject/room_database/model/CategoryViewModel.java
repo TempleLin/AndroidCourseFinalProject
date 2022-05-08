@@ -40,4 +40,8 @@ public class CategoryViewModel extends AndroidViewModel {
     public LiveData<Boolean> categoryExists(Application application, String name) {
         return repository.categoryExists(application, name);
     }
+
+    public static void deleteAll(Application application) {
+        repository.deleteAll(application);
+    }
 }
