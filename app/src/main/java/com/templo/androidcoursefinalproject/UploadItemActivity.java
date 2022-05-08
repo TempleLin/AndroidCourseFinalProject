@@ -1,24 +1,28 @@
 package com.templo.androidcoursefinalproject;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.templo.androidcoursefinalproject.room_database.model.CategoryViewModel;
+
+import java.util.ArrayList;
 
 public class UploadItemActivity extends AppCompatActivity {
 
     private Button chooseLocationBtn;
     private TextView itemLocShowTV;
+    private Spinner itemCategorySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +31,25 @@ public class UploadItemActivity extends AppCompatActivity {
 
         itemLocShowTV = findViewById(R.id.itemLocShowTV);
         chooseLocationBtn = findViewById(R.id.itemChooseLocBtn);
+        itemCategorySpinner = findViewById(R.id.itemCatergorySpinner);
 
         chooseLocationBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, MapsSelectLocActivity.class);
             activityResultLauncher.launch(intent);
+        });
+
+        //Set categories retrieved from categories table to spinner.
+        CategoryViewModel categoryViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+                .create(CategoryViewModel.class);
+        categoryViewModel.getAllCategories().observe(this, categories -> {
+            ArrayList<String> arraySpinner = new ArrayList<>();
+            categories.forEach(category -> {
+                arraySpinner.add(category.getName());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadItemActivity.this,
+                        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, arraySpinner);
+                adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+                itemCategorySpinner.setAdapter(adapter);
+            });
         });
     }
 
