@@ -3,6 +3,9 @@ package com.templo.androidcoursefinalproject;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
@@ -12,11 +15,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,19 +38,30 @@ public class UploadItemActivity extends AppCompatActivity {
     private Button chooseLocationBtn;
     private TextView itemLocShowTV;
     private Spinner itemCategorySpinner;
+    private LinearLayout uploadImgsLinearLayout;
     private ArrayList<ImageView> allUploadImageVs = new ArrayList<>();
     private ArrayList<String> allUploadImageString = new ArrayList<>();
+
+    private int maxAcceptableUploadImages = 5;
+//    private int screenDPHeight;
+//    float screenDPWidth;
+
+    private int selectImageVIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_item);
 
+//        getScreenWidthHeightDP();
+
         itemLocShowTV = findViewById(R.id.itemLocShowTV);
         chooseLocationBtn = findViewById(R.id.itemChooseLocBtn);
         itemCategorySpinner = findViewById(R.id.itemCatergorySpinner);
+        uploadImgsLinearLayout = findViewById(R.id.imageViewsLinearLayout);
         ImageView firstUploadImageV = findViewById(R.id.uploadImageV);
         firstUploadImageV.setOnClickListener(uploadImageViewOnClick);
+//        firstUploadImageV.getLayoutParams().width = getViewDPFromPixels(firstUploadImageV, (int)screenDPWidth / 5);
         allUploadImageVs.add(firstUploadImageV);
 
         chooseLocationBtn.setOnClickListener(v -> {
@@ -66,6 +83,17 @@ public class UploadItemActivity extends AppCompatActivity {
             });
         });
     }
+
+    private int getViewDPFromPixels(View view, int pixels) {
+        float factor = view.getContext().getResources().getDisplayMetrics().density;
+        return (int)(pixels * factor);
+    }
+
+//    private void getScreenWidthHeightDP() {
+//        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+//        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+//        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+//    }
 
     private final ActivityResultLauncher<Intent> mapSelectActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -108,7 +136,8 @@ public class UploadItemActivity extends AppCompatActivity {
                 }
                 index.getAndIncrement();
             });
-            intent.putExtra("Index", index.intValue());
+            Log.d("INDEXBEFORE", String.valueOf(index.intValue()));
+            selectImageVIndex = index.intValue();
             uploadImgResultLauncher.launch(intent);
         }
     };
@@ -128,14 +157,22 @@ public class UploadItemActivity extends AppCompatActivity {
                             byte[] byteArray = byteArrayOutputStream.toByteArray();
                             String imageToString = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                            int imageViewIndex = data.getIntExtra("Index", 0);
+                            int imageViewIndex = selectImageVIndex;
                             if (imageViewIndex + 1 > allUploadImageString.size()) {
                                 allUploadImageString.add(imageToString);
+                                if (allUploadImageString.size() < maxAcceptableUploadImages) {
+                                    ImageView newImageView = new ImageView(UploadItemActivity.this);
+                                    newImageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                                    newImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_camera_foreground, null));
+                                    newImageView.setOnClickListener(uploadImageViewOnClick);
+                                    uploadImgsLinearLayout.addView(newImageView);
+                                    allUploadImageVs.add(newImageView);
+                                }
                             } else {
                                 allUploadImageString.set(imageViewIndex, imageToString);
                             }
                             allUploadImageVs.get(imageViewIndex).setImageBitmap(bitmap);
-
+                            Log.d("INDEX", String.valueOf(imageViewIndex));
 //                            UserViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(application)
 //                                    .create(UserViewModel.class);
 //                            TheDatabase.databaseWriteExecutor.execute(() -> {
