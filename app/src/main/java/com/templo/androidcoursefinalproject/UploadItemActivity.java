@@ -43,8 +43,6 @@ public class UploadItemActivity extends AppCompatActivity {
     private ArrayList<String> allUploadImageString = new ArrayList<>();
 
     private int maxAcceptableUploadImages = 5;
-//    private int screenDPHeight;
-//    float screenDPWidth;
 
     private int selectImageVIndex;
 
@@ -53,15 +51,12 @@ public class UploadItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_item);
 
-//        getScreenWidthHeightDP();
-
         itemLocShowTV = findViewById(R.id.itemLocShowTV);
         chooseLocationBtn = findViewById(R.id.itemChooseLocBtn);
         itemCategorySpinner = findViewById(R.id.itemCatergorySpinner);
         uploadImgsLinearLayout = findViewById(R.id.imageViewsLinearLayout);
         ImageView firstUploadImageV = findViewById(R.id.uploadImageV);
         firstUploadImageV.setOnClickListener(uploadImageViewOnClick);
-//        firstUploadImageV.getLayoutParams().width = getViewDPFromPixels(firstUploadImageV, (int)screenDPWidth / 5);
         allUploadImageVs.add(firstUploadImageV);
 
         chooseLocationBtn.setOnClickListener(v -> {
@@ -88,12 +83,6 @@ public class UploadItemActivity extends AppCompatActivity {
         float factor = view.getContext().getResources().getDisplayMetrics().density;
         return (int)(pixels * factor);
     }
-
-//    private void getScreenWidthHeightDP() {
-//        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-//        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-//        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-//    }
 
     private final ActivityResultLauncher<Intent> mapSelectActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
