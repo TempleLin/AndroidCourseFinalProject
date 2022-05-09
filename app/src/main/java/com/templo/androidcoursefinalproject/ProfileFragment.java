@@ -340,4 +340,5 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
+    public static int getUserIDAfterLoggedIn() {return userIDAfterLoggedIn;}
 }

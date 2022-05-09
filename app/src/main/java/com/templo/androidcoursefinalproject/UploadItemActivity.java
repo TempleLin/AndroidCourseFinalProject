@@ -21,12 +21,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.templo.androidcoursefinalproject.room_database.model.Category;
 import com.templo.androidcoursefinalproject.room_database.model.CategoryViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.Product;
+import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
+import com.templo.androidcoursefinalproject.room_database.util.TheDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,10 +43,15 @@ public class UploadItemActivity extends AppCompatActivity {
 
     private Button chooseLocationBtn;
     private TextView itemLocShowTV;
+    private EditText itemNameEditText;
+    private EditText descriptionsEditText;
     private Spinner itemCategorySpinner;
     private LinearLayout uploadImgsLinearLayout;
+    private Button uploadItemBtn;
     private ArrayList<ImageView> allUploadImageVs = new ArrayList<>();
     private ArrayList<String> allUploadImageString = new ArrayList<>();
+
+    private ArrayList<Category> allCategories = new ArrayList<>();
 
     private int maxAcceptableUploadImages = 5;
 
@@ -53,8 +64,11 @@ public class UploadItemActivity extends AppCompatActivity {
 
         itemLocShowTV = findViewById(R.id.itemLocShowTV);
         chooseLocationBtn = findViewById(R.id.itemChooseLocBtn);
+        itemNameEditText = findViewById(R.id.itemNameEditText);
         itemCategorySpinner = findViewById(R.id.itemCatergorySpinner);
+        descriptionsEditText = findViewById(R.id.descriptionsEditText);
         uploadImgsLinearLayout = findViewById(R.id.imageViewsLinearLayout);
+        uploadItemBtn = findViewById(R.id.itemUploadBtn);
         ImageView firstUploadImageV = findViewById(R.id.uploadImageV);
         firstUploadImageV.setOnClickListener(uploadImageViewOnClick);
         allUploadImageVs.add(firstUploadImageV);
@@ -71,17 +85,33 @@ public class UploadItemActivity extends AppCompatActivity {
             ArrayList<String> arraySpinner = new ArrayList<>();
             categories.forEach(category -> {
                 arraySpinner.add(category.getName());
+                allCategories.add(category);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(UploadItemActivity.this,
                         androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, arraySpinner);
                 adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
                 itemCategorySpinner.setAdapter(adapter);
             });
         });
-    }
 
-    private int getViewDPFromPixels(View view, int pixels) {
-        float factor = view.getContext().getResources().getDisplayMetrics().density;
-        return (int)(pixels * factor);
+        uploadItemBtn.setOnClickListener(v -> {
+            //itemCategorySpinner.getSelectedItemPosition()
+            ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
+                    .create(ProductViewModel.class);
+            TheDatabase.databaseWriteExecutor.execute(() -> {
+                int imagesSize = allUploadImageString.size();
+                ProductViewModel.insert(getApplication(), new Product(itemNameEditText.getText().toString(),
+                        ProfileFragment.getUserIDAfterLoggedIn(),
+                        imagesSize >= 1? allUploadImageString.get(0) : null,
+                        imagesSize >= 2? allUploadImageString.get(1) : null,
+                        imagesSize >= 3? allUploadImageString.get(2) : null,
+                        imagesSize >= 4? allUploadImageString.get(3) : null,
+                        imagesSize >= 5? allUploadImageString.get(4) : null,
+                        itemCategorySpinner.getSelectedItemPosition() + allCategories.get(0).getId(), //First record's id in category table might not start from 0.
+                        itemLocShowTV.getText().toString(),
+                        descriptionsEditText.getText().toString()
+                        ));
+            });
+        });
     }
 
     private final ActivityResultLauncher<Intent> mapSelectActivityResultLauncher = registerForActivityResult(

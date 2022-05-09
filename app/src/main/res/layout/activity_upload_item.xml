@@ -57,7 +57,7 @@
         android:id="@+id/itemCatergorySpinner"
         android:layout_width="321dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemCategoryTV" />
@@ -78,7 +78,7 @@
         android:id="@+id/itemChooseLocBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="@string/choose_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.171"
@@ -106,18 +106,20 @@
         android:text="@string/upload"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemChooseLocBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionsEditText"
+        app:layout_constraintVertical_bias="0.346" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="380dp"
-        android:layout_height="145dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="374dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itemThumbnailsTV" >
+        app:layout_constraintTop_toBottomOf="@+id/itemThumbnailsTV">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -140,5 +142,30 @@
         </HorizontalScrollView>
 
     </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:id="@+id/descriptionsEditText"
+        android:layout_width="316dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="@string/preferred_trades_etc"
+        android:inputType="textMultiLine|textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/activity_upload_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/descriptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemChooseLocBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

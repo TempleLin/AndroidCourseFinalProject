@@ -28,4 +28,6 @@
     <string name="name">Name</string>
     <string name="upload">Upload</string>
     <string name="title_activity_maps_select_loc">MapsSelectLocActivity</string>
+    <string name="descriptions">Descriptions:</string>
+    <string name="preferred_trades_etc">(Preferred Trades, etc...)</string>
 </resources>
