@@ -42,14 +42,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </body>
 <script>
-    $('#main').append(
-        "    <div class=\"gallery\">\n" +
-        "<!--        <a target=\"_blank\" href=\"img_lights.jpg\">-->\n" +
-        "            <img src=\"imgs/messageImage_1629607224308.jpeg\" alt=\"Northern Lights\" width=\"600\" height=\"400\">\n" +
-        "<!--        </a>-->\n" +
-        "        <div class=\"desc\">Add a description of the image here</div>\n" +
-        "    </div>"
-    );
+    //Gets called from Android Studio WebView.
+    function insertGallery(imgSrc, description) {
+        let img = new Image();
+        //Base64 string to image.
+        img.src = 'data:image/png;base64,' + imgSrc;
+        let allContents =
+            $("    <div class=\"gallery\"></div>");
+        allContents.append(img);
+        allContents.append("<div class=\"desc\">" + description + "</div>");
+        $('#main').append(
+            allContents
+        );
+    }
+    // insertGallery("imgs/messageImage_1629607224308.jpeg", "asdfasdf");
+    // function alertTest() {
+    //     alert('Hello world test!');
+    // }
 </script>
 </html>
 

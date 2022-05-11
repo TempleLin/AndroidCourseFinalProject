@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -88,7 +89,15 @@ public class HomeFragment extends Fragment {
 //        webSettings.setBlockNetworkImage(false);//not block image
 
         //This is needed if JS alert() etc is needed to work.
-        homeFragWV.setWebChromeClient(new WebChromeClient());
+        homeFragWV.setWebChromeClient(new WebChromeClient(){
+            //Log console message from WebView.
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                Log.d("WebViewConsole", consoleMessage.message() + " -- From line " +
+                        consoleMessage.lineNumber() + " of " + consoleMessage.sourceId());
+                return true;
+            }
+        });
         //This is required for setting custom events such as url loading overrides.
         homeFragWV.setWebViewClient(new Callback());
 
@@ -105,18 +114,15 @@ public class HomeFragment extends Fragment {
         userViewModel.getAllProducts().observe(requireActivity(), allProducts -> {
             Log.d("ALLPRODUCTS", "COUNT: " + allProducts.size());
             allProducts.forEach(product -> {
-                allProductsHTML.append(
-                        "    <div class=\"gallery\">\n" +
-                                "            <img src=\"imgs/download.png\" alt=\"Forest\" width=\"600\" height=\"400\">\n" +
-                                "        <div class=\"desc\">New added.</div>\n" +
-                                "    </div>"
-                );
+                String argument = "javascript:insertGallery("
+                        +"\""+ product.getImage1() + "\","
+                        +"\""+ product.getDescription()+"\")";
+//                Log.d("WebViewArg", argument);
+                homeFragWV.loadUrl(argument);
             });
+            Log.d("WEBVIEW_TOAPPEND", allProductsHTML.toString());
         });
-        homeFragWV.loadUrl("javascript:(function(){" +
-                "$('#main').append(\n" +
-                        allProductsHTML +
-                "})()");
+
 
         ImageButton cartBtn = requireView().findViewById(R.id.shopping_cart_btn);
         cartBtn.setOnClickListener(v -> {
