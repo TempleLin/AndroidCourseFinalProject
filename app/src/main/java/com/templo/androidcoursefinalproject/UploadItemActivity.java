@@ -111,6 +111,9 @@ public class UploadItemActivity extends AppCompatActivity {
                         descriptionsEditText.getText().toString()
                         ));
             });
+            Intent intent = getIntent();
+            setResult(RESULT_OK, intent);
+            finish();
         });
     }
 

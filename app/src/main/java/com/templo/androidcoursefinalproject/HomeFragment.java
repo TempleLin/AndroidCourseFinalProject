@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+
+import com.templo.androidcoursefinalproject.room_database.model.Product;
+import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
+import com.templo.androidcoursefinalproject.room_database.model.UserViewModel;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,6 +97,26 @@ public class HomeFragment extends Fragment {
 
         homeFragWV.loadUrl("file:///android_asset/ItemsListsWeb/index.html");
 //        homeFragWV.loadUrl("javascript:(function(){alert('Hello world!');})()");
+
+        StringBuilder allProductsHTML = new StringBuilder();
+
+        ProductViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+                .create(ProductViewModel.class);
+        userViewModel.getAllProducts().observe(requireActivity(), allProducts -> {
+            Log.d("ALLPRODUCTS", "COUNT: " + allProducts.size());
+            allProducts.forEach(product -> {
+                allProductsHTML.append(
+                        "    <div class=\"gallery\">\n" +
+                                "            <img src=\"imgs/download.png\" alt=\"Forest\" width=\"600\" height=\"400\">\n" +
+                                "        <div class=\"desc\">New added.</div>\n" +
+                                "    </div>"
+                );
+            });
+        });
+        homeFragWV.loadUrl("javascript:(function(){" +
+                "$('#main').append(\n" +
+                        allProductsHTML +
+                "})()");
 
         ImageButton cartBtn = requireView().findViewById(R.id.shopping_cart_btn);
         cartBtn.setOnClickListener(v -> {
