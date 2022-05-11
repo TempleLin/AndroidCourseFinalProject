@@ -11,6 +11,13 @@ div.gallery {
   //margin-top: 10px;
   float: left;
   width: 49%;
+
+  //Required to keep all images equal height.
+  height: 35vh;
+
+  /* To cutoff out-of-border text. */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 div.gallery:hover {

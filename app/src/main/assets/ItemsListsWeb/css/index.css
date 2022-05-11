@@ -11,6 +11,10 @@ div.gallery {
   border: 1px solid #ccc;
   float: left;
   width: 49%;
+  height: 35vh;
+  /* To cutoff out-of-border text. */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 div.gallery:hover {
