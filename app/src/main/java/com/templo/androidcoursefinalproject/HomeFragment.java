@@ -107,33 +107,35 @@ public class HomeFragment extends Fragment {
         homeFragWV.loadUrl("file:///android_asset/ItemsListsWeb/index.html");
 //        homeFragWV.loadUrl("javascript:(function(){alert('Hello world!');})()");
 
-        StringBuilder allProductsHTML = new StringBuilder();
-
-        ProductViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
-                .create(ProductViewModel.class);
-        userViewModel.getAllProducts().observe(requireActivity(), allProducts -> {
-            Log.d("ALLPRODUCTS", "COUNT: " + allProducts.size());
-            allProducts.forEach(product -> {
-                String argument = "javascript:insertGallery("
-                        +"\""+ product.getImage1() + "\","
-                        +"\""+ product.getDescription()+"\")";
-//                Log.d("WebViewArg", argument);
-                homeFragWV.loadUrl(argument);
-            });
-            Log.d("WEBVIEW_TOAPPEND", allProductsHTML.toString());
-        });
-
-
         ImageButton cartBtn = requireView().findViewById(R.id.shopping_cart_btn);
         cartBtn.setOnClickListener(v -> {
             Log.d("TAG", "Click cart button!");
         });
     }
 
-    private static class Callback extends WebViewClient {
+    private class Callback extends WebViewClient {
+        private boolean homePageLoaded = false;
         @Override //Don't override loading url from code.
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return false;
+        }
+
+        //Need to wait for the website to load complete before calling insertGallery() custom function;
+        //Otherwise, the function might be called before it's even instantiated.
+        public void onPageFinished(WebView view, String url) {
+            if (homePageLoaded) return;
+            homePageLoaded = true;
+            ProductViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+                    .create(ProductViewModel.class);
+            userViewModel.getAllProducts().observe(HomeFragment.this.requireActivity(), allProducts -> {
+                Log.d("ALLPRODUCTS", "COUNT: " + allProducts.size());
+                allProducts.forEach(product -> {
+                    String argument = "javascript:insertGallery("
+                            +"\""+ product.getImage1() + "\","
+                            +"\""+ product.getDescription()+"\")";
+                    homeFragWV.loadUrl(argument);
+                });
+            });
         }
     }
 }

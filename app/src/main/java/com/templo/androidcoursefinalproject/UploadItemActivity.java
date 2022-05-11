@@ -98,6 +98,9 @@ public class UploadItemActivity extends AppCompatActivity {
             ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(getApplication())
                     .create(ProductViewModel.class);
             TheDatabase.databaseWriteExecutor.execute(() -> {
+                Log.d("CATEGORY_SELECT", String.valueOf(itemCategorySpinner.getSelectedItemPosition()));
+                Log.d("CATEGORY_SELECT", String.valueOf(allCategories.get(0).getId()));
+                Log.d("CATEGORY_SELECT", String.valueOf(itemCategorySpinner.getSelectedItemPosition() + allCategories.get(0).getId()));
                 int imagesSize = allUploadImageString.size();
                 ProductViewModel.insert(getApplication(), new Product(itemNameEditText.getText().toString(),
                         ProfileFragment.getUserIDAfterLoggedIn(),
