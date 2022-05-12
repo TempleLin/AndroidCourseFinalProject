@@ -197,10 +197,7 @@ public class ProfileFragment extends Fragment {
                 profilePicImgV.setImageBitmap(profilePicAfterLoggedIn);
             return;
         }
-        loginBtn.setOnClickListener(v -> {
-            Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
-            loginResultLauncher.launch(loginIntent);
-        });
+        loginBtn.setOnClickListener(onLoginBtnClickListener);
     }
 
     private void setChangeProfilePicOnClick() {
@@ -225,6 +222,7 @@ public class ProfileFragment extends Fragment {
             );
             params.gravity = Gravity.CENTER_HORIZONTAL;
             loginBtn.setLayoutParams(params);
+            loginBtn.setOnClickListener(onLoginBtnClickListener);
             profileViewGroup.addView(loginBtn);
         }
     }
@@ -273,6 +271,14 @@ public class ProfileFragment extends Fragment {
         usernameAfterLoggedIn = USER_NOT_LOGIN_NAME;
         userIDAfterLoggedIn = USER_NOT_LOGIN_ID;
     }
+
+    private final View.OnClickListener onLoginBtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent loginIntent = new Intent(getActivity(), LoginRegisterActivity.class);
+            loginResultLauncher.launch(loginIntent);
+        }
+    };
 
     private final ActivityResultLauncher<Intent> uploadItemResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),

@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/LearningFolder/AndroidCourseFinalProject/app/src/main/res/layout/activity_main.xml" value="0.19067028985507245" />
+        <entry key="..\:/LearningFolder/AndroidCourseFinalProject/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/LearningFolder/AndroidCourseFinalProject/app/src/main/res/layout/activity_upload_item.xml" value="0.33" />
+        <entry key="..\:/LearningFolder/AndroidCourseFinalProject/app/src/main/res/layout/fragment_home.xml" value="0.33" />
+        <entry key="..\:/LearningFolder/AndroidCourseFinalProject/app/src/main/res/layout/fragment_login.xml" value="0.20153985507246377" />
         <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/drawable/ic_arrow_back_background.xml" value="0.238" />
         <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.212" />
         <entry key="..\:/LearningProjects/AndroidCourseFinalProject/app/src/main/res/drawable/ic_home.xml" value="0.212" />
