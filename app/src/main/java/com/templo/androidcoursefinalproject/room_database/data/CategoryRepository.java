@@ -27,6 +27,11 @@ public class CategoryRepository {
         });
     }
 
+    public LiveData<Category> getCategory(Application application, int id) {
+        TheDatabase db = TheDatabase.getDatabase(application);
+        return db.categoryDAO().getCategory(id);
+    }
+
     public LiveData<Category> getCategory(Application application, String name) {
         TheDatabase db = TheDatabase.getDatabase(application);
         return db.categoryDAO().getCategory(name);

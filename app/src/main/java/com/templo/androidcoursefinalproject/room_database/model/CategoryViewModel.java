@@ -33,6 +33,10 @@ public class CategoryViewModel extends AndroidViewModel {
         repository.insert(category);
     }
 
+    public LiveData<Category> getCategory(Application application, int id) {
+        return repository.getCategory(application, id);
+    }
+
     public LiveData<Category> getCategory(Application application, String name) {
         return repository.getCategory(application, name);
     }

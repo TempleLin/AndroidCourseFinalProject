@@ -30,6 +30,12 @@ public class UserRepository {
             userDao.insert(user);
         });
     }
+
+    public LiveData<User> getUser(Application application, int id) {
+        TheDatabase db = TheDatabase.getDatabase(application);
+        return db.userDao().getUser(id);
+    }
+
     public LiveData<User> getUser(Application application, String email, String name, String password) {
         TheDatabase db = TheDatabase.getDatabase(application);
         return db.userDao().getUser(email, name, password);

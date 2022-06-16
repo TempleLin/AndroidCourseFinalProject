@@ -159,19 +159,17 @@ public class HomeFragment extends Fragment {
             ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(homeFragmentActivity.getApplication())
                     .create(ProductViewModel.class);
 
-            //This makes the code in run() execute in main thread. .observer() cannot work on background thread.
+            //This makes the code in run() execute in main thread. .observe() cannot work on background thread.
             Handler handler = new Handler(Looper.getMainLooper());
             handler.post(new Runnable() {
                 public void run() {
                     productViewModel.getProduct(homeFragmentActivity.getApplication(), productId).observe(HomeFragment.this.requireActivity(), product -> {
-                        Dialog itemDialog = new Dialog(homeFragmentActivity);
-                        itemDialog.setContentView(R.layout.item_custom_dialog);
-                        itemDialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_bg);
+                        CustomItemDialog itemDialog = new CustomItemDialog(homeFragmentActivity);
+                        itemDialog.setProduct(product);
                         itemDialog.show();
                     });
                 }
             });
-
         }
     }
 }

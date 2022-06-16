@@ -35,6 +35,10 @@ public class UserViewModel extends AndroidViewModel {
         repository.insert(user);
     }
 
+    public LiveData<User> getUser(Application application, int id) {
+        return repository.getUser(application, id);
+    }
+
     public LiveData<User> getUser(Application application, String email, String name, String password) {
         return repository.getUser(application, email, name, password);
     }

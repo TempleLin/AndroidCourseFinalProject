@@ -30,4 +30,6 @@
     <string name="title_activity_maps_select_loc">MapsSelectLocActivity</string>
     <string name="descriptions">Descriptions:</string>
     <string name="preferred_trades_etc">(Preferred Trades, etc...)</string>
+    <string name="owner_none">Owner: None</string>
+    <string name="category_none">Category: None</string>
 </resources>
