@@ -3,6 +3,9 @@ package com.templo.androidcoursefinalproject;
 import static android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Application;
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +96,7 @@ public class HomeFragment extends Fragment {
 //        webSettings.setBlockNetworkImage(false);//not block image
 
         //This is needed if JS alert() etc is needed to work.
-        homeFragWV.setWebChromeClient(new WebChromeClient(){
+        homeFragWV.setWebChromeClient(new WebChromeClient() {
             //Log console message from WebView.
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
@@ -120,6 +125,7 @@ public class HomeFragment extends Fragment {
 
     private class Callback extends WebViewClient {
         private boolean homePageLoaded = false;
+
         @Override //Don't override loading url from code.
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return false;
@@ -130,15 +136,15 @@ public class HomeFragment extends Fragment {
         public void onPageFinished(WebView view, String url) {
             if (homePageLoaded) return;
             homePageLoaded = true;
-            ProductViewModel userViewModel = new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
+            ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())
                     .create(ProductViewModel.class);
-            userViewModel.getAllProducts().observe(HomeFragment.this.requireActivity(), allProducts -> {
+            productViewModel.getAllProducts().observe(HomeFragment.this.requireActivity(), allProducts -> {
                 Log.d("ALLPRODUCTS", "COUNT: " + allProducts.size());
                 allProducts.forEach(product -> {
                     String argument = "javascript:insertGallery("
-                            +"\"" + product.getImage1() + "\","
-                            +"\"" + product.getDescription() + "\""
-                            +"," + product.getId() + ")";
+                            + "\"" + product.getImage1() + "\","
+                            + "\"" + product.getDescription() + "\""
+                            + "," + product.getId() + ")";
                     homeFragWV.loadUrl(argument);
                 });
             });
@@ -149,7 +155,23 @@ public class HomeFragment extends Fragment {
         //Mark with @JavascriptInterface annotation to make this callback function accessible within JS in WebView.
         @JavascriptInterface
         public void showListItem(int productId) {
-            Log.d("productId", String.valueOf(productId));
+            Activity homeFragmentActivity = HomeFragment.this.requireActivity();
+            ProductViewModel productViewModel = new ViewModelProvider.AndroidViewModelFactory(homeFragmentActivity.getApplication())
+                    .create(ProductViewModel.class);
+
+            //This makes the code in run() execute in main thread. .observer() cannot work on background thread.
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                public void run() {
+                    productViewModel.getProduct(homeFragmentActivity.getApplication(), productId).observe(HomeFragment.this.requireActivity(), product -> {
+                        Dialog itemDialog = new Dialog(homeFragmentActivity);
+                        itemDialog.setContentView(R.layout.item_custom_dialog);
+                        itemDialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_dialog_bg);
+                        itemDialog.show();
+                    });
+                }
+            });
+
         }
     }
 }
