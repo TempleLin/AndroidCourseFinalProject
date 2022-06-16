@@ -17,12 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.templo.androidcoursefinalproject.room_database.model.Product;
 import com.templo.androidcoursefinalproject.room_database.model.ProductViewModel;
@@ -101,6 +103,9 @@ public class HomeFragment extends Fragment {
         //This is required for setting custom events such as url loading overrides.
         homeFragWV.setWebViewClient(new Callback());
 
+        //For calling to the class's methods from WebView's JS.
+        homeFragWV.addJavascriptInterface(new JSCallbacks(), "jsc");
+
 //        webSettings.setMixedContentMode(MIXED_CONTENT_ALWAYS_ALLOW);
 //        CookieManager.getInstance().setAcceptThirdPartyCookies(homeFragWV, true);
 
@@ -131,11 +136,20 @@ public class HomeFragment extends Fragment {
                 Log.d("ALLPRODUCTS", "COUNT: " + allProducts.size());
                 allProducts.forEach(product -> {
                     String argument = "javascript:insertGallery("
-                            +"\""+ product.getImage1() + "\","
-                            +"\""+ product.getDescription()+"\")";
+                            +"\"" + product.getImage1() + "\","
+                            +"\"" + product.getDescription() + "\""
+                            +"," + product.getId() + ")";
                     homeFragWV.loadUrl(argument);
                 });
             });
+        }
+    }
+
+    private class JSCallbacks {
+        //Mark with @JavascriptInterface annotation to make this callback function accessible within JS in WebView.
+        @JavascriptInterface
+        public void showListItem(int productId) {
+            Log.d("productId", String.valueOf(productId));
         }
     }
 }

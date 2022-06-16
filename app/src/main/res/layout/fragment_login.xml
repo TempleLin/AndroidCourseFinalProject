@@ -42,7 +42,7 @@
 
             <Button
                 android:id="@+id/login_check_btn"
-                android:layout_width="170dp"
+                android:layout_width="80dp"
                 android:layout_height="48dp"
                 android:text="@string/login"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +64,7 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.901"
+                app:layout_constraintHorizontal_bias="0.902"
                 app:layout_constraintStart_toEndOf="@+id/login_check_btn"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />

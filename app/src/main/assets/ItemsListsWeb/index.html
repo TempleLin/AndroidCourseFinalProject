@@ -43,12 +43,15 @@
 </body>
 <script>
     //Gets called from Android Studio WebView.
-    function insertGallery(imgSrc, description) {
+    function insertGallery(imgSrc, description, productId) {
         let img = new Image();
         //Base64 string to image.
         img.src = 'data:image/png;base64,' + imgSrc;
         img.width = 600;
         img.height = 400;
+        img.addEventListener('click', () => {
+            jsc.showListItem(productId);
+        });
         let allContents =
             $("    <div class=\"gallery\"></div>");
         allContents.append(img);
