@@ -8,6 +8,6 @@ Locale to fetch place in local language<br/>
 Calls from Java to JS and from JS to Java in WebView<br/>
 Fragment switching in LoginRegisterActivity<br/>
 Image converting between string and saving to database<br/>
-Custom list adapter in profile<br/>
+Custom, switchable list adapter in profile<br/>
 Login logout keeps user image<br/>
 Clicking on store item shows its item data<br/>
