@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb13ed04-a521-4a33-aec1-f404e5fa0757" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../java/com/templo/androidcoursefinalproject/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/templo/androidcoursefinalproject/HomeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +61,7 @@
       <workItem from="1652242198912" duration="6945000" />
       <workItem from="1652360884597" duration="1211000" />
       <workItem from="1652837455783" duration="612000" />
-      <workItem from="1655386248627" duration="1729000" />
+      <workItem from="1655386248627" duration="2324000" />
     </task>
     <servers />
   </component>
