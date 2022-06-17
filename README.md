@@ -5,6 +5,7 @@ Database uses multithreading and asynchronous<br/>
 Custom item dialog fetching data from database<br/>
 Geocoder to get location in map<br/>
 Locale to fetch place in local language<br/>
+Calls from Java to JS and from JS to Java in WebView<br/>
 Fragment switching in LoginRegisterActivity<br/>
 Image converting between string and saving to database<br/>
 Custom list adapter in profile<br/>
