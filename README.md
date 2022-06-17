@@ -1,4 +1,4 @@
-Things to mention:
+Things to mention:<br/>
 ROOM Database<br/>
 Uses foreign keys to make relational mapping<br/>
 Database uses multithreading and asynchronous<br/>
